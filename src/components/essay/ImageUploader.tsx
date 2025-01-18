@@ -6,12 +6,17 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { AlertCircle, CheckCircle2 } from 'lucide-react'
 
-console.log(process.env.NEXT_PUBLIC_SERVER_URL)
+interface ImageUploaderProps {
+  type: 'essay' | 'identification'
+}
 
-export default function ImageUploader() {
+export default function ImageUploader({type} : ImageUploaderProps) {
   const [file, setFile] = useState<File | null>(null)
   const [isLoading, setIsLoading] = useState(false)
   const [message, setMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null)
+
+  const endpoint = process.env.NEXT_PUBLIC_SERVER_URL + (type === 'essay' ? '/essay' : '/identification')
+  console.log(endpoint)
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -27,7 +32,7 @@ export default function ImageUploader() {
     formData.append('image', file)
 
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/essay`, {
+      const response = await fetch(endpoint, {
         method: 'POST',
         body: formData,
       })
@@ -38,7 +43,18 @@ export default function ImageUploader() {
 
       const data = await response.json()
 
-      setMessage({ type: 'success', text: `the rating of your essay is, ${data} / 100` })
+      console.log(data)
+
+      let text = ''
+
+      if (type === 'essay') {
+        text = `the rating of your essay is, ${data} / 100`
+      }
+      else {
+        text = `you did identification!`
+      }
+
+      setMessage({ type: 'success', text: text })
     } catch (error) {
       console.log(error)
       setMessage({ type: 'error', text: 'Failed to upload image. Please try again.' })
