@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import Image from "next/image";
+// import Image from "next/image";
 import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { auth } from "../../lib/firebase/init";
 
@@ -34,8 +34,8 @@ export default function TeacherLogin() {
   };
 
   return (
-    <div className="mx-auto p-6 w-full max-w-md">
-      <h1 className="text-2xl font-bold text-center mb-6">Teacher Login</h1>
+    <div className="mx-auto p-6 w-full max-w-lg my-12">
+      <h1 className="text-3xl font-bold text-center mb-6">Teacher Login</h1>
       {error && <div className="mb-4 text-red-600 text-center text-sm">{error}</div>}
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
@@ -76,7 +76,7 @@ export default function TeacherLogin() {
             Privacy Policy
           </Link>.
         </div>
-        <div className="flex justify-center mt-4 space-x-3">
+        {/* <div className="flex justify-center mt-4 space-x-3">
           <button type="button" aria-label="Sign in with Facebook" className="p-2 border rounded-md hover:bg-gray-50">
             <Image src="/facebook-icon.png" alt="Facebook" width={24} height={24} />
           </button>
@@ -86,7 +86,7 @@ export default function TeacherLogin() {
           <button type="button" aria-label="Sign in with Microsoft" className="p-2 border rounded-md hover:bg-gray-50">
             <Image src="/microsoft-icon.png" alt="Microsoft" width={24} height={24} />
           </button>
-        </div>
+        </div> */}
         <button
           type="submit"
           disabled={loading}
@@ -98,7 +98,7 @@ export default function TeacherLogin() {
       </form>
       <div className="mt-4 text-center text-sm">
         Don’t have an account?{" "}
-        <Link href="/auth/signup" className="text-blue-600 hover:underline">
+        <Link href="/auth/register" className="text-blue-600 hover:underline">
           Sign Up
         </Link>
         <br />

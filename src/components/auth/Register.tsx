@@ -40,8 +40,8 @@ export default function Register() {
   };
 
   return (
-    <div className="w-full max-w-xl mx-auto">
-      <h1 className="text-2xl font-bold mb-4 text-center">Create New Teacher Account</h1>
+    <div className="mx-auto p-6 w-full max-w-lg my-12">
+      <h1 className="text-3xl font-bold mb-4 text-center">Create New Teacher Account</h1>
       {error && <div className="mb-4 text-red-600 text-sm text-center">{error}</div>}
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
@@ -100,7 +100,7 @@ export default function Register() {
           {loading ? "Registering..." : "Register New User"}
         </button>
       </form>
-      <div className="flex justify-center mt-4 space-x-2">
+      {/* <div className="flex justify-center mt-4 space-x-2">
         <button className="p-2 bg-gray-100 rounded-md hover:bg-gray-200">
           <img src="/icons/facebook.svg" alt="Facebook login" className="w-6 h-6" />
         </button>
@@ -110,7 +110,7 @@ export default function Register() {
         <button className="p-2 bg-gray-100 rounded-md hover:bg-gray-200">
           <img src="/icons/microsoft.svg" alt="Microsoft login" className="w-6 h-6" />
         </button>
-      </div>
+      </div> */}
       <div className="mt-4 text-center">
         <Link href="/auth/login" className="text-sm text-blue-600 hover:underline">
           Already have an account? Sign In
