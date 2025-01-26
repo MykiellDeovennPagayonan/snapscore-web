@@ -51,7 +51,17 @@ export default function ImageUploader({type} : ImageUploaderProps) {
         text = `the rating of your essay is, ${data} / 100`
       }
       else {
-        text = `you did identification!`
+        let score : number = 0
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        data.items.forEach((item : any) => {
+          console.log(item)
+          if (item.isCorrect) {
+            console.log(item.isCorrect)
+            score++
+          }
+        })
+        const totaScore = data.items.length
+        text = `you scored ${score} out of ${totaScore}`
       }
 
       setMessage({ type: 'success', text: text })
