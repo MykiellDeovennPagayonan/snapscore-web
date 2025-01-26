@@ -12,13 +12,15 @@ const Footer: FC = () => {
           <div className="col-span-1">
             <h2 className="text-xl mb-4">INSTALL DeGrader FREE</h2>
             <Link href="https://play.google.com/store" className="inline-block">
-              <Image
-                src="/google-play-badge.jpg"
-                alt="Get it on Google Play"
-                width={200}
-                height={30}
-                className="hover:opacity-90 rounded-lg"
-              />
+              <div className='p-2 bg-black items-center justify-center rounded-lg'>
+                <Image
+                  src="/google-play-badge.jpg"
+                  alt="Get it on Google Play"
+                  width={200}
+                  height={30}
+                  className="hover:opacity-90 rounded-lg"
+                />
+              </div>
             </Link>
           </div>
 
@@ -74,7 +76,7 @@ const Footer: FC = () => {
 
         {/* Copyright Notice */}
         <div className="mt-8 pt-8 border-t border-gray-700 text-sm text-gray-400">
-          <p>2024 © DeGrader LLC. All Rights Reserved.</p>
+          <p>2025 © DeGrader LLC. All Rights Reserved.</p>
         </div>
       </div>
     </footer>
