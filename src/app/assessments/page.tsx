@@ -2,6 +2,6 @@ import TeacherLayout from "@/components/teacher/TeacherLayout";
 
 export default function Page() {
   return (
-    <TeacherLayout/>
+    <TeacherLayout type="assessment"/>
   )
 }
