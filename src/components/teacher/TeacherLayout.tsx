@@ -3,9 +3,9 @@
 import { useParams } from "next/navigation"
 import TeacherAccount from "./TeacherAccount"
 import TeacherProfile from "./TeacherProfile"
-import Assessments from "./Assessments"
-import AnswerSheets from "./AnswerSheets"
-import AccountSettings from "./AccountSettings"
+import Assessments from "./assessments/Assessments"
+import AnswerSheets from "./answer-sheets/AnswerSheets"
+import AccountSettings from "./account-settings/AccountSettings"
 import { JSX } from "react"
 
 interface TeacherLayoutProps {

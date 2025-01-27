@@ -10,7 +10,6 @@ interface AssessmentsProps {
 }
 
 export default function Assessments({params} : AssessmentsProps) {
-
   console.log(params)
 
   function renderContent() : JSX.Element {
