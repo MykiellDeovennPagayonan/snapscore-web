@@ -1,5 +1,6 @@
 import { Search } from "lucide-react";
 import AssessmentPreview from "./AssessmentPreview";
+import NewAssessment from "./NewAssessment";
 
 const assessments = [
   {id: "assasssaa", title: "Sample Essay"},
@@ -27,6 +28,7 @@ export default function AssessmentsList() {
         {assessments.map((assessment, index) => (
           <AssessmentPreview key={index} id={assessment.id} title={assessment.title}/>
         ))}
+        <NewAssessment />
       </div>
     </div>
   )

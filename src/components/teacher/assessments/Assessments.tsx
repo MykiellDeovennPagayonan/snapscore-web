@@ -1,6 +1,11 @@
+"use client";
+
 import AssessmentsList from "./AssessmentsList";
 import StudentList from "./StudentList";
 import { JSX } from "react";
+import { usePathname } from "next/navigation";
+import CreateIdentificationAssessment from "./create/CreateIdentificationAssessment";
+import CreateEssayAssessment from "./create/CreateEssayAssessment";
 
 interface AssessmentsProps {
   params: {
@@ -10,9 +15,15 @@ interface AssessmentsProps {
 }
 
 export default function Assessments({params} : AssessmentsProps) {
-  console.log(params)
+  const pathname = usePathname()
 
   function renderContent() : JSX.Element {
+    if (pathname === "/assessments/create/identification") {
+      return <CreateIdentificationAssessment />
+    }
+    if (pathname === "/assessments/create/essay") {
+      return <CreateEssayAssessment />
+    }
     if (params.id) {
       return <StudentList assessmentId={params.id}/>
     }
