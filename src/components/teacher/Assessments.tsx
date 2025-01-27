@@ -5,7 +5,7 @@ import { JSX } from "react";
 interface AssessmentsProps {
   params: {
     id: string;
-    studentId: string;
+    resultId: string;
   }
 }
 
@@ -15,7 +15,7 @@ export default function Assessments({params} : AssessmentsProps) {
 
   function renderContent() : JSX.Element {
     if (params.id) {
-      return <StudentList/>
+      return <StudentList assessmentId={params.id}/>
     }
     return <AssessmentsList/>
   }
