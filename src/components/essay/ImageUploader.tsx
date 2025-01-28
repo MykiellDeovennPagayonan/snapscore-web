@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 
 import { useState } from 'react'
@@ -16,6 +15,19 @@ interface EssayResponse {
   }[]
 }
 
+interface IdentificationItem {
+  itemNumber: number
+  correctAnswer: string
+  studentAnswer: string
+  isCorrect: boolean
+  manualCheck: boolean
+}
+
+interface IdentificationResponse {
+  items: IdentificationItem[]
+  studentName: string
+}
+
 interface ImageUploaderProps {
   type: 'essay' | 'identification'
   assessmentId: string
@@ -31,7 +43,6 @@ export default function ImageUploader({ type, assessmentId }: ImageUploaderProps
 
   const submitEssayResult = async (essayData: EssayResponse) => {
     try {
-      // Calculate total score as average of all criteria percentages
       const totalScore = essayData.criteria.reduce((acc, criterion) => {
         return acc + (criterion.rating / criterion.maxRating) * 100;
       }, 0) / essayData.criteria.length;
@@ -41,7 +52,7 @@ export default function ImageUploader({ type, assessmentId }: ImageUploaderProps
         assessmentId,
         score: totalScore,
         questionResults: [{
-          questionId: '1', // You might want to make this dynamic
+          questionId: '1',
           score: totalScore,
           essayCriteriaResults: essayData.criteria.map(criterion => ({
             criteriaId: criterion.name.toLowerCase(),
@@ -58,13 +69,37 @@ export default function ImageUploader({ type, assessmentId }: ImageUploaderProps
         body: JSON.stringify(requestBody)
       });
 
-      if (!response.ok) {
-        throw new Error('Failed to save essay result');
-      }
-
+      if (!response.ok) throw new Error('Failed to save essay result');
       return await response.json();
     } catch (error) {
       console.error('Error submitting essay result:', error);
+      throw error;
+    }
+  }
+
+  const submitIdentificationResult = async (identificationData: IdentificationResponse) => {
+    try {
+      const requestBody = {
+        studentName: identificationData.studentName,
+        assessmentId,
+        questionResults: identificationData.items.map((item, index) => ({
+          questionId: (index + 1).toString(),
+          isCorrect: item.isCorrect
+        }))
+      };
+
+      const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/identification-results`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(requestBody)
+      });
+
+      if (!response.ok) throw new Error('Failed to save identification result');
+      return await response.json();
+    } catch (error) {
+      console.error('Error submitting identification result:', error);
       throw error;
     }
   }
@@ -88,42 +123,41 @@ export default function ImageUploader({ type, assessmentId }: ImageUploaderProps
         body: formData,
       })
 
-      if (!response.ok) {
-        throw new Error('Upload failed')
-      }
+      if (!response.ok) throw new Error('Upload failed')
 
       const data = await response.json()
+      let resultId: string
 
       if (type === 'essay') {
-        // Submit essay result and get the resultId
         const essayResult = await submitEssayResult(data)
-        
-        // Calculate average score for display
-        const averageScore = data.criteria.reduce((acc: number, criterion: any) => 
+        resultId = essayResult.id
+
+        const averageScore = data.criteria.reduce((acc: number, criterion: { rating: number; maxRating: number }) => 
           acc + (criterion.rating / criterion.maxRating) * 100, 0) / data.criteria.length;
         
         setMessage({ 
           type: 'success', 
           text: `Essay submitted successfully! Average score: ${averageScore.toFixed(1)}%` 
         })
-
-        // Navigate to result page
-        router.push(`/assessments/${assessmentId}/${type}/${essayResult.id}`)
       } else {
-        let score: number = 0
-        data.items.forEach((item: any) => {
-          if (item.isCorrect) score++
-        })
-        const totalScore = data.items.length
+        const identificationResult = await submitIdentificationResult(data)
+        resultId = identificationResult.id
+
+        const correctAnswers = data.items.filter((item: { isCorrect: boolean }) => item.isCorrect).length
+        const totalQuestions = data.items.length
+        
         setMessage({ 
           type: 'success', 
-          text: `You scored ${score} out of ${totalScore}` 
+          text: `Score: ${correctAnswers} out of ${totalQuestions}` 
         })
       }
 
+      // Navigate to result page
+      router.push(`/assessments/${assessmentId}/${type}/${resultId}`)
+
     } catch (error) {
       console.error(error)
-      setMessage({ type: 'error', text: 'Failed to upload image. Please try again.' })
+      setMessage({ type: 'error', text: 'Failed to process image. Please try again.' })
     } finally {
       setIsLoading(false)
     }
@@ -141,7 +175,7 @@ export default function ImageUploader({ type, assessmentId }: ImageUploaderProps
           className='w-56 bg-white border border-black'
         />
         <Button type="submit" disabled={isLoading}>
-          {isLoading ? 'Uploading...' : 'Upload Image'}
+          {isLoading ? 'Processing...' : 'Upload Image'}
         </Button>
       </form>
       {message && (
