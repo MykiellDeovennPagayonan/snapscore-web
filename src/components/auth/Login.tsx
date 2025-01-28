@@ -24,7 +24,7 @@ export default function TeacherLogin() {
       const res = await signInWithEmailAndPassword(email, password);
       if (res) {
         console.log("Logged in successfully:", res);
-        router.push("/dashboard");
+        router.push("/assessments");
       }
     } catch (err) {
       setError((err as Error).message || "An error occurred during login.");

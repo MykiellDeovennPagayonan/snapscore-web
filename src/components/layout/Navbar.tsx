@@ -1,4 +1,3 @@
-// components/Navbar.tsx
 import Link from 'next/link';
 import { FC } from 'react';
 import Image from 'next/image';
@@ -25,16 +24,15 @@ const Navbar: FC = () => {
               </div>
             </div>
 
-            {/* Auth Buttons */}
             <div className="flex items-center space-x-4">
               <Link
-                href="/register"
+                href="/auth/register"
                 className="bg-[#bdd5db] text-gray-900 font-semibold px-4 py-2 rounded-md text-lg hover:bg-[#cadee3]"
               >
                 Register
               </Link>
               <Link
-                href="/login"
+                href="/auth/login"
                 className="bg-[#bdd5db] text-gray-900 font-semibold px-4 py-2 rounded-md text-lg hover:bg-[#cadee3]"
               >
                 Log In

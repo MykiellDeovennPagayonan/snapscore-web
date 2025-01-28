@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { auth } from "../../lib/firebase/init";
+import createUser from "@/utils/createUser";
+import { UserCredential } from "firebase/auth";
 
 export default function Register() {
   const [email, setEmail] = useState("");
@@ -25,12 +27,17 @@ export default function Register() {
 
     setLoading(true);
     try {
-      const res = await createUserWithEmailAndPassword(email, password);
+      const res: UserCredential = await createUserWithEmailAndPassword(email, password) as UserCredential;
+      console.log(res.user)
       if (res) {
+        const userData = {
+          email
+        }
+        await createUser(userData)
         console.log("User registered:", res);
         setEmail("");
         setPassword("");
-        router.push("/dashboard");
+        router.push("/assessments");
       }
     } catch (err) {
       setError((err as Error).message || "An error occurred during registration.");

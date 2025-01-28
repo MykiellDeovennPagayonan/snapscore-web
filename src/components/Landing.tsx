@@ -3,10 +3,9 @@ import Image from 'next/image';
 const Landing = () => {
   return (
     <div className="max-w-4xl mx-auto py-12 px-4">
-      {/* Hero Section */}
       <div className="grid grid-cols-2 gap-4 mb-16">
         <div className="relative h-48">
-          <div className="bg-orange-100 p-4 rounded-lg">
+          <div className="bg-gray-300 p-4 rounded-lg">
             <h3 className="text-lg font-semibold mb-2">Snap it.</h3>
             <Image
               src="/images/writing.jpg"
@@ -17,7 +16,7 @@ const Landing = () => {
           </div>
         </div>
         <div className="relative h-48">
-          <div className="bg-gray-100 p-4 rounded-lg">
+          <div className="bg-gray-300 p-4 rounded-lg">
             <h3 className="text-lg font-semibold mb-2">Score it.</h3>
             <Image
               src="/images/grading.jpg"
@@ -29,9 +28,7 @@ const Landing = () => {
         </div>
       </div>
 
-      {/* Features Section */}
       <div className="space-y-24">
-        {/* AI Feature */}
         <div className="text-center">
           <div className="relative w-24 h-24 mx-auto mb-4">
             <Image
@@ -47,7 +44,6 @@ const Landing = () => {
           </p>
         </div>
 
-        {/* Platform Support */}
         <div className="text-center">
           <div className="relative w-24 h-24 mx-auto mb-4">
             <Image
@@ -65,7 +61,6 @@ const Landing = () => {
           </ul>
         </div>
 
-        {/* Companion Website */}
         <div className="text-center">
           <div className="relative w-24 h-24 mx-auto mb-4">
             <Image
@@ -81,7 +76,6 @@ const Landing = () => {
           </p>
         </div>
 
-        {/* Answer Sheets */}
         <div className="text-center">
           <div className="relative w-24 h-24 mx-auto mb-4">
             <Image

@@ -152,7 +152,6 @@ export default function ImageUploader({ type, assessmentId }: ImageUploaderProps
         })
       }
 
-      // Navigate to result page
       router.push(`/assessments/${assessmentId}/${type}/${resultId}`)
 
     } catch (error) {
@@ -165,14 +164,14 @@ export default function ImageUploader({ type, assessmentId }: ImageUploaderProps
 
   return (
     <div className="space-y-4">
-      <form onSubmit={handleSubmit} className="space-x-4 flex flex-row max-w-4xl py-4">
+      <form onSubmit={handleSubmit} className="space-x-4 flex flex-row max-w-2xl py-4">
         <Input
           id="image"
           type="file"
           accept="image/*"
           onChange={(e) => setFile(e.target.files?.[0] || null)}
           disabled={isLoading}
-          className='w-56 bg-white border border-black'
+          className='w-52 bg-white border border-black'
         />
         <Button type="submit" disabled={isLoading}>
           {isLoading ? 'Processing...' : 'Upload Image'}
