@@ -2,10 +2,11 @@ import { ArrowLeft } from "lucide-react";
 import { Search } from "lucide-react";
 import StudentPreview from "./StudentPreview";
 import Link from "next/link";
+import ImageUploader from "@/components/essay/ImageUploader";
 
 interface StudentListProps {
   assessmentId: string;
-  type: string
+  type: "essay" | "identification"
 }
 
 const studentResults = [
@@ -24,7 +25,8 @@ export default function StudentList({assessmentId, type}: StudentListProps) {
         <Link href="/assessments">
           <ArrowLeft className="w-5 h-5" />
         </Link>
-        <h1 className="text-3xl font-bold">Sample Essay</h1>
+        <h1 className="text-3xl font-bold mr-auto">Sample Essay</h1>
+        <ImageUploader type={type}/>
       </div>
       <div className="p-4">
         <div className="flex items-center bg-white rounded-lg p-2 border border-black">

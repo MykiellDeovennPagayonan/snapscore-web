@@ -1,5 +1,5 @@
 "use client"
-import Landing from "@/components/landing";
+import Landing from "@/components/Landing";
 
 export default function Home() {
 

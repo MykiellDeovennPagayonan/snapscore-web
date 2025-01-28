@@ -3,20 +3,20 @@
 import { useState } from 'react'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { AlertCircle, CheckCircle2 } from 'lucide-react'
+// import { Label } from "@/components/ui/label"
+// import { AlertCircle, CheckCircle2 } from 'lucide-react'
 
 interface ImageUploaderProps {
   type: 'essay' | 'identification'
 }
 
-export default function ImageUploader({type} : ImageUploaderProps) {
+export default function ImageUploader({ type }: ImageUploaderProps) {
   const [file, setFile] = useState<File | null>(null)
   const [isLoading, setIsLoading] = useState(false)
   const [message, setMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null)
 
   const endpoint = process.env.NEXT_PUBLIC_SERVER_URL + (type === 'essay' ? '/essay' : '/identification')
-  console.log(endpoint)
+  console.log(message)
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -51,9 +51,9 @@ export default function ImageUploader({type} : ImageUploaderProps) {
         text = `the rating of your essay is, ${data} / 100`
       }
       else {
-        let score : number = 0
+        let score: number = 0
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        data.items.forEach((item : any) => {
+        data.items.forEach((item: any) => {
           console.log(item)
           if (item.isCorrect) {
             console.log(item.isCorrect)
@@ -74,26 +74,19 @@ export default function ImageUploader({type} : ImageUploaderProps) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4 max-w-md mx-auto p-4">
-      <div>
-        <Label htmlFor="image">Select Image</Label>
-        <Input
-          id="image"
-          type="file"
-          accept="image/*"
-          onChange={(e) => setFile(e.target.files?.[0] || null)}
-          disabled={isLoading}
-        />
-      </div>
+    <form onSubmit={handleSubmit} className="space-x-4 flex flex-row max-w-4xl py-4 ">
+      {/* <Label htmlFor="image">Select Image</Label> */}
+      <Input
+        id="image"
+        type="file"
+        accept="image/*"
+        onChange={(e) => setFile(e.target.files?.[0] || null)}
+        disabled={isLoading}
+        className='w-56 bg-white border border-black'
+      />
       <Button type="submit" disabled={isLoading}>
         {isLoading ? 'Uploading...' : 'Upload Image'}
       </Button>
-      {message && (
-        <div className={`flex items-center ${message.type === 'success' ? 'text-green-600' : 'text-red-600'}`}>
-          {message.type === 'success' ? <CheckCircle2 className="mr-2" /> : <AlertCircle className="mr-2" />}
-          {message.text}
-        </div>
-      )}
     </form>
   )
 }
