@@ -6,6 +6,8 @@ import { JSX } from "react";
 import { usePathname } from "next/navigation";
 import CreateIdentificationAssessment from "./create/CreateIdentificationAssessment";
 import CreateEssayAssessment from "./create/CreateEssayAssessment";
+import IdentificationStudentResult from "./IdentificationStudentResult";
+import EssayStudentResult from "./EssayStudentResult";
 
 interface AssessmentsProps {
   params: {
@@ -23,6 +25,9 @@ export default function Assessments({params} : AssessmentsProps) {
     }
     if (pathname === "/assessments/create/essay") {
       return <CreateEssayAssessment />
+    }
+    if (params.id && params.resultId) {
+      return <EssayStudentResult />
     }
     if (params.id) {
       return <StudentList assessmentId={params.id}/>
