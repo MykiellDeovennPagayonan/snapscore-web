@@ -13,7 +13,7 @@ interface TeacherLayoutProps {
 }
 
 export default function TeacherLayout({type}: TeacherLayoutProps) {
-  const params = useParams<{ id: string, resultId: string }>()
+  const params = useParams<{ id: string, resultId: string, type: string }>()
 
   function renderContent() : JSX.Element {
     switch(type) {

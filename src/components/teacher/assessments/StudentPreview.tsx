@@ -5,12 +5,13 @@ interface EssayStudentPreviewProps {
   resultId: string;
   name: string;
   score: number;
+  type: string
 }
 
-export default function StudentPreview({ assessmentId, resultId, name, score }: EssayStudentPreviewProps) {
+export default function StudentPreview({ type, assessmentId, resultId, name, score }: EssayStudentPreviewProps) {
   return (
     <div>
-      <Link href={`/assessment/${assessmentId}/${resultId}`}>
+      <Link href={`/assessments/${assessmentId}/${type}/${resultId}`}>
         <div className="flex items-center justify-between p-4 bg-white rounded-lg border border-black">
           <div className="flex items-center gap-2">
             <div className="w-6 h-6 bg-gray-200 rounded-full flex items-center justify-center">

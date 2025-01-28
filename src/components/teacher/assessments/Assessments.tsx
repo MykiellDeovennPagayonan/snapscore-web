@@ -13,6 +13,7 @@ interface AssessmentsProps {
   params: {
     id: string;
     resultId: string;
+    type: string
   }
 }
 
@@ -27,10 +28,15 @@ export default function Assessments({params} : AssessmentsProps) {
       return <CreateEssayAssessment />
     }
     if (params.id && params.resultId) {
-      return <EssayStudentResult />
+      if (pathname.includes("/identification")) {
+        return <IdentificationStudentResult />
+      }
+      if (pathname.includes("/essay")) {
+        return <EssayStudentResult />
+      }
     }
     if (params.id) {
-      return <StudentList assessmentId={params.id}/>
+      return <StudentList assessmentId={params.id} type={params.type}/>
     }
     return <AssessmentsList/>
   }

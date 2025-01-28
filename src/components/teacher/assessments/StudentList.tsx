@@ -5,6 +5,7 @@ import Link from "next/link";
 
 interface StudentListProps {
   assessmentId: string;
+  type: string
 }
 
 const studentResults = [
@@ -16,7 +17,7 @@ const studentResults = [
   { id: "eqadasdads", name: "Student 6", score: 69 },
 ];
 
-export default function StudentList({assessmentId}: StudentListProps) {
+export default function StudentList({assessmentId, type}: StudentListProps) {
   return (
     <div className="flex flex-col w-full">
       <div className="flex items-center gap-2 p-4">
@@ -37,7 +38,7 @@ export default function StudentList({assessmentId}: StudentListProps) {
       </div>
       <div className="space-y-2 p-4">
         {studentResults.map((result, index) => (
-          <StudentPreview key={index} assessmentId={assessmentId} resultId={result.id} name={result.name} score={result.score} />
+          <StudentPreview key={index} type={type} assessmentId={assessmentId} resultId={result.id} name={result.name} score={result.score} />
         ))}
       </div>
     </div>
