@@ -26,7 +26,7 @@ export default function StudentList({assessmentId, type}: StudentListProps) {
           <ArrowLeft className="w-5 h-5" />
         </Link>
         <h1 className="text-3xl font-bold mr-auto">Sample Essay</h1>
-        <ImageUploader type={type}/>
+        <ImageUploader type={type} assessmentId={assessmentId}/>
       </div>
       <div className="p-4">
         <div className="flex items-center bg-white rounded-lg p-2 border border-black">

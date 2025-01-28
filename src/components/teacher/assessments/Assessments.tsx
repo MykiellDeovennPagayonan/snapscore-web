@@ -13,7 +13,7 @@ interface AssessmentsProps {
   params: {
     id: string;
     resultId: string;
-    type: string
+    type: "essay" | "identification"
   }
 }
 
