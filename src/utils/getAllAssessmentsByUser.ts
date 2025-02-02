@@ -1,6 +1,6 @@
 export type Assessment = {
   id: string;
-  title: string; // Corresponds to "name" in the database
+  title: string;
   type: "essay" | "identification";
 };
 
@@ -9,6 +9,8 @@ export async function getAllAssessmentsByUser(userId: string): Promise<Assessmen
     const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL;
 
     const response = await fetch(`${baseUrl}/assessments/user/${userId}`);
+
+    console.log("response", response);
     
     if (!response.ok) {
       throw new Error("Failed to fetch assessments");
