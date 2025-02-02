@@ -11,6 +11,7 @@ import { UserCredential } from "firebase/auth";
 export default function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [fullName, setFullName] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [createUserWithEmailAndPassword] = useCreateUserWithEmailAndPassword(auth);
@@ -28,15 +29,17 @@ export default function Register() {
     setLoading(true);
     try {
       const res: UserCredential = await createUserWithEmailAndPassword(email, password) as UserCredential;
-      console.log(res.user)
       if (res) {
         const userData = {
-          email
+          email,
+          firebaseId: res.user.uid,
+          fullName,
         }
         await createUser(userData)
         console.log("User registered:", res);
         setEmail("");
         setPassword("");
+        setFullName("");
         router.push("/assessments");
       }
     } catch (err) {
@@ -51,6 +54,20 @@ export default function Register() {
       <h1 className="text-3xl font-bold mb-4 text-center">Create New Teacher Account</h1>
       {error && <div className="mb-4 text-red-600 text-sm text-center">{error}</div>}
       <form onSubmit={handleSubmit} className="space-y-4">
+        <div>
+          <label htmlFor="fullName" className="block text-sm font-medium text-gray-700">
+            Full Name
+          </label>
+          <input
+            type="text"
+            id="fullName"
+            value={fullName}
+            onChange={(e) => setFullName(e.target.value)}
+            required
+            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+            placeholder="Enter your full name"
+          />
+        </div>
         <div>
           <label htmlFor="email" className="block text-sm font-medium text-gray-700">
             Email
