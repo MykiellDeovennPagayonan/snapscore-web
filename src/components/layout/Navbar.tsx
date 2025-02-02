@@ -1,8 +1,13 @@
+"use client"
 import Link from 'next/link';
 import { FC } from 'react';
 import Image from 'next/image';
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "../../lib/firebase/init";
 
 const Navbar: FC = () => {
+  const [user, loading] = useAuthState(auth);
+
   return (
     <>
       <nav className="bg-gray-600 text-white">
@@ -23,25 +28,28 @@ const Navbar: FC = () => {
                 />
               </div>
             </div>
-
-            <div className="flex items-center space-x-4">
-              <Link
-                href="/auth/register"
-                className="bg-[#bdd5db] text-gray-900 font-semibold px-4 py-2 rounded-md text-lg hover:bg-[#cadee3]"
-              >
-                Register
-              </Link>
-              <Link
-                href="/auth/login"
-                className="bg-[#bdd5db] text-gray-900 font-semibold px-4 py-2 rounded-md text-lg hover:bg-[#cadee3]"
-              >
-                Log In
-              </Link>
-            </div>
+            {
+              (!loading && !user) && (
+                <div className="flex items-center space-x-4">
+                  <Link
+                    href="/auth/register"
+                    className="bg-[#bdd5db] text-gray-900 font-semibold px-4 py-2 rounded-md text-lg hover:bg-[#cadee3]"
+                  >
+                    Register
+                  </Link>
+                  <Link
+                    href="/auth/login"
+                    className="bg-[#bdd5db] text-gray-900 font-semibold px-4 py-2 rounded-md text-lg hover:bg-[#cadee3]"
+                  >
+                    Log In
+                  </Link>
+                </div>
+              )
+            }
           </div>
         </div>
 
-        <div className="bg-[#bdd5db] py-2">
+        {/* <div className="bg-[#bdd5db] py-2">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 hidden md:flex space-x-6">
             <Link
               href="/pricing"
@@ -56,7 +64,7 @@ const Navbar: FC = () => {
               Support
             </Link>
           </div>
-        </div>
+        </div> */}
       </nav>
     </>
   );
