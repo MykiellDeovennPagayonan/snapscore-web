@@ -5,51 +5,31 @@ import { auth } from "../../../lib/firebase/init";
 import AssessmentPreview from "./AssessmentPreview";
 import NewAssessment from "./NewAssessment";
 import { getAllAssessmentsByUser, Assessment } from "@/utils/getAllAssessmentsByUser";
-import { getUserByFirebaseId } from "@/utils/getUserByFirebaseId";
 import { Skeleton } from "@/components/ui/skeleton";
-
-type User = {
-  id: string;
-  email: string;
-  firebaseId: string;
-  fullName: string;
-}
 
 export default function AssessmentsList() {
   const [assessments, setAssessments] = useState<Assessment[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [user, loading] = useAuthState(auth);
-  const [userData, setUserData] = useState<User | null>(null);
+  const [listLoading, setListLoading] = useState(false)
 
-  useEffect(() => {
-    async function fetchUserData() {
-      if (!user) return;
-
+  async function fetchAssessments() {
+    if (user) {
       try {
-        const data = await getUserByFirebaseId(user.uid);
-        setUserData(data);
-      } catch (error) {
-        console.error("Failed to fetch user data:", error);
-      }
-    }
-
-    fetchUserData();
-  }, [user]);
-
-  useEffect(() => {
-    async function fetchAssessments() {
-      if (!userData) return;
-
-      try {
-        const data = await getAllAssessmentsByUser(userData.id);
+        setListLoading(true)
+        const data = await getAllAssessmentsByUser(user.uid);
         setAssessments(data);
       } catch (error) {
         console.error("Failed to fetch assessments:", error);
+      } finally {
+        setListLoading(false)
       }
     }
+  }
 
-    fetchAssessments();
-  }, [userData]);
+  useEffect(() => {
+    fetchAssessments()
+  }, [user]);
 
   const filteredAssessments = assessments.filter((assessment) =>
     assessment.title.toLowerCase().includes(searchTerm.toLowerCase())
@@ -74,7 +54,7 @@ export default function AssessmentsList() {
         </div>
       </div>
       <div className="space-y-2 p-4">
-        {loading ?
+        {loading || listLoading?
           <div className="space-y-2">
             <Skeleton className="w-full h-12" />
             <Skeleton className="w-full h-12" />
@@ -88,6 +68,7 @@ export default function AssessmentsList() {
                 id={assessment.id}
                 title={assessment.title}
                 type={assessment.type}
+                onDelete={fetchAssessments}
               />
             ))
           ) : (
