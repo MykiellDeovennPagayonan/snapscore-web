@@ -14,7 +14,8 @@ type EssayCriteria = {
 type EssayCriteriaResult = {
   id: string;
   criteria: {
-    criteria: string
+    criteria: string;
+    maxScore: number;
   };
   score: number;
   maxScore: number;
