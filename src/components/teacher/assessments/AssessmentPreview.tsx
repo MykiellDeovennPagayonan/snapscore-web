@@ -51,43 +51,43 @@ export default function AssessmentPreview({ id, title, type, onDelete }: Assessm
 
   return (
     <div className="relative">
-      <div className="flex items-center justify-between p-4 bg-white rounded-lg border border-black">
-        <Link href={`/assessments/${id}/${type}`}>
+      <Link href={`/assessments/${id}/${type}`}>
+        <div className="flex items-center justify-between p-4 bg-white rounded-lg border border-black">
           <div className="flex items-center gap-2">
             <div className="w-6 h-6 bg-gray-200 rounded-full flex items-center justify-center">
               📚
             </div>
             <span className="text-gray-700 text-sm">{title}</span>
           </div>
-        </Link>
-        
-        <div className="relative dropdown-container">
-          <button 
-            onClick={(e) => {
-              e.preventDefault();
-              setShowDropdown(!showDropdown);
-            }}
-            className="p-1 hover:bg-gray-100 rounded-full"
-          >
-            <MoreVertical className="w-5 h-5 text-gray-500" />
-          </button>
 
-          {showDropdown && (
-            <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10 border border-gray-200">
-              <div 
-                className="px-4 py-2 text-sm text-red-600 hover:bg-red-50 cursor-pointer"
-                onClick={(e) => {
-                  e.preventDefault();
-                  setShowDropdown(false);
-                  setShowDeleteDialog(true);
-                }}
-              >
-                Delete
+          <div className="relative dropdown-container">
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                setShowDropdown(!showDropdown);
+              }}
+              className="p-1 hover:bg-gray-100 rounded-full"
+            >
+              <MoreVertical className="w-5 h-5 text-gray-500" />
+            </button>
+
+            {showDropdown && (
+              <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10 border border-gray-200">
+                <div
+                  className="px-4 py-2 text-sm text-red-600 hover:bg-red-50 cursor-pointer"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setShowDropdown(false);
+                    setShowDeleteDialog(true);
+                  }}
+                >
+                  Delete
+                </div>
               </div>
-            </div>
-          )}
+            )}
+          </div>
         </div>
-      </div>
+      </Link>
 
       <Dialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
         <DialogContent>

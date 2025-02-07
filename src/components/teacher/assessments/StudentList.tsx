@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import { useEffect, useState } from "react";
 import { ArrowLeft, Search } from "lucide-react";
@@ -5,7 +6,8 @@ import StudentPreview from "./StudentPreview";
 import Link from "next/link";
 import ImageUploader from "@/components/essay/ImageUploader";
 import { fetchEssayResults, fetchIdentificationResults } from "../../../utils/getResults"
-import { getAssessmentName } from "@/utils/getAssessmentName";
+import { getEssayAssessmentById } from "@/utils/getAssessmentById";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface StudentListProps {
   assessmentId: string;
@@ -22,13 +24,14 @@ interface Result {
 export default function StudentList({ assessmentId, type }: StudentListProps) {
   const [results, setResults] = useState<Result[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [assessmentName, setAssessmentName] = useState("");
+  const [assessmentLoading, setAssessmentLoading] = useState(true);
+  const [nameLoading, setNameLoading] = useState(true)
+  // const [error, setError] = useState<string | null>(null);
+  const [assessment, setAssessment] = useState<EssayAssessment>();
 
   useEffect(() => {
     const fetchResults = async () => {
-      setLoading(true);
+      setAssessmentLoading(true);
       try {
         const data = type === "essay"
           ? await fetchEssayResults(assessmentId)
@@ -36,20 +39,22 @@ export default function StudentList({ assessmentId, type }: StudentListProps) {
 
         setResults(data.results);
       } catch (err) {
-        setError("Failed to fetch results");
         console.error("Error fetching results:", err);
       } finally {
-        setLoading(false);
+        setAssessmentLoading(false);
       }
     };
 
     const fetchName = async () => {
+      setNameLoading(true)
       try {
-        const name = await getAssessmentName(assessmentId, type);
-        setAssessmentName(name);
+        const assessment = await getEssayAssessmentById(assessmentId, type);
+        console.log(assessment)
+        setAssessment(assessment);
       } catch (err) {
-        setAssessmentName("Untitled Assessment");
         console.error("Error fetching assessment name:", err);
+      } finally {
+        setNameLoading(false)
       }
     };
 
@@ -61,30 +66,22 @@ export default function StudentList({ assessmentId, type }: StudentListProps) {
     result.studentName.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  if (loading) {
-    return (
-      <div className="flex justify-center items-center h-screen">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="flex justify-center items-center h-screen text-red-500">
-        {error}
-      </div>
-    );
-  }
-
   return (
     <div className="flex flex-col w-full">
       <div className="flex items-center gap-2 p-4">
         <Link href="/assessments" className="hover:opacity-80 transition-opacity">
           <ArrowLeft className="w-5 h-5" />
         </Link>
-        <h1 className="text-3xl font-bold mr-auto">{assessmentName}</h1>
-        <ImageUploader type={type} assessmentId={assessmentId} />
+        {nameLoading ?
+          <Skeleton className="w-full h-10" />
+          :
+          <h1 className="text-3xl font-bold mr-auto">{assessment ? assessment.name : "Untitled Assessment"}</h1>
+        }
+        {type === "essay" && assessment ? 
+      <ImageUploader type={type} assessmentId={assessmentId} essayCriteria={assessment.essayCriteria}/>
+      :
+      <ImageUploader type={type} assessmentId={assessmentId} />  
+      }
       </div>
 
       <div className="p-4">
@@ -106,16 +103,24 @@ export default function StudentList({ assessmentId, type }: StudentListProps) {
         </div>
       ) : (
         <div className="space-y-2 p-4">
-          {filteredResults.map((result) => (
-            <StudentPreview
-              key={result.id}
-              type={type}
-              assessmentId={assessmentId}
-              resultId={result.id}
-              name={result.studentName}
-              score={result.score}
-            />
-          ))}
+          {assessmentLoading ?
+            <div className="space-y-2">
+              <Skeleton className="w-full h-12" />
+              <Skeleton className="w-full h-12" />
+              <Skeleton className="w-full h-12" />
+            </div>
+            :
+            filteredResults.map((result) => (
+              <StudentPreview
+                key={result.id}
+                type={type}
+                assessmentId={assessmentId}
+                resultId={result.id}
+                name={result.studentName}
+                score={result.score}
+              />
+            ))
+          }
         </div>
       )}
     </div>

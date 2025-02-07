@@ -32,7 +32,7 @@ export default function Assessments({params} : AssessmentsProps) {
         return <IdentificationStudentResult />
       }
       if (pathname.includes("/essay")) {
-        return <EssayStudentResult />
+        return <EssayStudentResult resultId={params.resultId}/>
       }
     }
     if (params.id) {

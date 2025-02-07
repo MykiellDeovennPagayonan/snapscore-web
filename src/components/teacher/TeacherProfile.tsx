@@ -6,6 +6,7 @@ import { auth } from "@/lib/firebase/init"
 import { getUserByFirebaseId } from "@/utils/getUserByFirebaseId"
 import { useAuthState } from "react-firebase-hooks/auth"
 import { Skeleton } from "../ui/skeleton"
+import Image from "next/image"
 
 export default function TeacherProfile() {
   const pathname = usePathname()
@@ -29,7 +30,15 @@ export default function TeacherProfile() {
 
   return (
     <div className="w-1/3 flex flex-col items-center space-y-6 p-4">
-      <div className="w-3/5 bg-white border border-black aspect-square rounded-full"></div>
+      <div className="w-3/5 bg-white border border-black flex items-center aspect-square rounded-full">
+        <Image
+          src={`/images/profile.png`}
+          alt="Profile"
+          width={128}
+          height={128}
+          className="h-auto w-2/3 m-auto"
+        />
+      </div>
       <div className="w-full flex flex-col items-center">
         {userData?.fullName ?
           <h2 className="font-bold text-2xl text-center">{userData.fullName}</h2>
