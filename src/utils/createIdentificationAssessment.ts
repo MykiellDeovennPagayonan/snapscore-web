@@ -5,10 +5,16 @@ export const createIdentificationAssessment = async (assessmentData: {
 }) => {
   const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL;
 
+  const payload = {
+    name: assessmentData.name,
+    firebaseId: assessmentData.firebaseId,
+    questions: assessmentData.answers.map(answer => ({ correctAnswer: answer })),
+  };
+
   const response = await fetch(`${baseUrl}/identification-assessment`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(assessmentData),
+    body: JSON.stringify(payload),
   });
 
   if (!response.ok) {

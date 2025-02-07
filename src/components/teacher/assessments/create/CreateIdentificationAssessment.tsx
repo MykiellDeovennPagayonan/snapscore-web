@@ -21,7 +21,9 @@ const CreateIdentificationAssessment = () => {
   const router = useRouter();
   const [assessmentName, setAssessmentName] = useState<string>('');
   const [numberOfAnswers, setNumberOfAnswers] = useState<number>(10);
-  const [answers, setAnswers] = useState<Answer[]>(Array.from({ length: numberOfAnswers }, (_, i) => ({ id: i + 1, value: '' })));
+  const [answers, setAnswers] = useState<Answer[]>(
+    Array.from({ length: numberOfAnswers }, (_, i) => ({ id: i + 1, value: '' }))
+  );
   const [user] = useAuthState(auth);
   const [isLoading, setIsLoading] = useState(false);
   const [toast, setToast] = useState<Toast | null>(null);
@@ -72,18 +74,22 @@ const CreateIdentificationAssessment = () => {
 
   const handleNumberOfAnswersChange = (value: number) => {
     setNumberOfAnswers(value);
-    setAnswers(Array.from({ length: value }, (_, i) => ({ 
-      id: i + 1, 
-      value: i < answers.length ? answers[i].value : '' 
-    })));
+    setAnswers(
+      Array.from({ length: value }, (_, i) => ({
+        id: i + 1,
+        value: i < answers.length ? answers[i].value : '',
+      }))
+    );
   };
 
   return (
     <div className="w-full p-4 relative">
       {toast && (
-        <div className={`fixed top-4 right-4 p-4 rounded-md shadow-lg transition-all ${
-          toast.type === 'success' ? 'bg-green-500' : 'bg-red-500'
-        } text-white`}>
+        <div
+          className={`fixed top-4 right-4 p-4 rounded-md shadow-lg transition-all ${
+            toast.type === 'success' ? 'bg-green-500' : 'bg-red-500'
+          } text-white`}
+        >
           {toast.message}
         </div>
       )}
@@ -92,12 +98,16 @@ const CreateIdentificationAssessment = () => {
         <Link href="/assessments" className="hover:opacity-80 transition-opacity">
           <ArrowLeft className="w-5 h-5" />
         </Link>
-        <h1 className="text-2xl font-bold ml-2">Create Identification Answer Sheet</h1>
+        <h1 className="text-2xl font-bold ml-2">
+          Create Identification Answer Sheet
+        </h1>
       </div>
 
       <div className="space-y-4">
         <div>
-          <label className="text-gray-600 block mb-1">Assessment Name:</label>
+          <label className="text-gray-600 block mb-1">
+            Assessment Name:
+          </label>
           <input
             type="text"
             value={assessmentName}
@@ -108,14 +118,20 @@ const CreateIdentificationAssessment = () => {
         </div>
 
         <div>
-          <label className="text-gray-600 block mb-1">Number of Answers:</label>
+          <label className="text-gray-600 block mb-1">
+            Number of Answers:
+          </label>
           <select
             value={numberOfAnswers}
-            onChange={(e) => handleNumberOfAnswersChange(Number(e.target.value))}
+            onChange={(e) =>
+              handleNumberOfAnswersChange(Number(e.target.value))
+            }
             className="w-32 p-2 border rounded-md appearance-none pl-4 focus:outline-none focus:ring-2 focus:ring-gray-200"
           >
-            {[10, 20, 30, 40, 50].map(num => (
-              <option key={num} value={num}>{num}</option>
+            {[10, 20, 30, 40, 50].map((num) => (
+              <option key={num} value={num}>
+                {num}
+              </option>
             ))}
           </select>
         </div>
@@ -128,7 +144,9 @@ const CreateIdentificationAssessment = () => {
                 <input
                   type="text"
                   value={answer.value}
-                  onChange={(e) => handleAnswerChange(answer.id, e.target.value)}
+                  onChange={(e) =>
+                    handleAnswerChange(answer.id, e.target.value)
+                  }
                   className="w-full p-2 border rounded-md pl-4 focus:outline-none focus:ring-2 focus:ring-gray-200"
                   placeholder={`Answer ${answer.id}`}
                 />
@@ -142,8 +160,8 @@ const CreateIdentificationAssessment = () => {
             onClick={handleSave}
             disabled={isLoading}
             className={`flex-1 py-2 px-4 rounded-md transition-all ${
-              isLoading 
-                ? 'bg-gray-300 cursor-not-allowed' 
+              isLoading
+                ? 'bg-gray-300 cursor-not-allowed'
                 : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
             }`}
           >
