@@ -15,14 +15,14 @@ export default function EssaySheets() {
       </div>
       <div className="p-4 flex w-full gap-4 flex-wrap justify-center">
         <div className="w-52 flex p-4 aspect-[8.5/11] bg-white border items-center border-black rounded-lg">
-          <p className="mt-auto text-center w-full"> 1 </p>
+          <p className="mt-auto text-center w-full"> 1 Questions</p>
         </div>
 
         <div className="w-52 flex p-4 aspect-[8.5/11] bg-white border items-center border-black rounded-lg">
-          <p className="mt-auto text-center w-full"> 2 </p>
+          <p className="mt-auto text-center w-full"> 2 Questions</p>
         </div>
         <div className="w-52 flex p-4 aspect-[8.5/11] bg-white border items-center border-black rounded-lg">
-          <p className="mt-auto text-center w-full"> 3 </p>
+          <p className="mt-auto text-center w-full"> 3 Questions</p>
         </div>
       </div>
     </div>

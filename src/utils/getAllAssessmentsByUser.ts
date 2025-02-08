@@ -1,14 +1,16 @@
 export type Assessment = {
   id: string;
-  title: string; // Corresponds to "name" in the database
+  title: string;
   type: "essay" | "identification";
 };
 
-export async function getAllAssessmentsByUser(userId: string): Promise<Assessment[]> {
+export async function getAllAssessmentsByUser(firebaseId: string): Promise<Assessment[]> {
   try {
     const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL;
 
-    const response = await fetch(`${baseUrl}/assessments/user/${userId}`);
+    const response = await fetch(`${baseUrl}/assessments/user/${firebaseId}`);
+
+    console.log("response", response);
     
     if (!response.ok) {
       throw new Error("Failed to fetch assessments");

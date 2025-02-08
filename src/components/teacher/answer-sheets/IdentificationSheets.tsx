@@ -15,15 +15,15 @@ export default function IdentificationSheets() {
       </div>
       <div className="p-4 flex w-full gap-4 flex-wrap justify-center">
         <div className="w-52 flex p-4 aspect-[8.5/11] bg-white border items-center border-black rounded-lg">
-          <p className="mt-auto text-center w-full"> 10 </p>
+          <p className="mt-auto text-center w-full"> 10 Questions</p>
         </div>
 
         <div className="w-52 flex p-4 aspect-[8.5/11] bg-white border items-center border-black rounded-lg">
-          <p className="mt-auto text-center w-full"> 20 </p>
+          <p className="mt-auto text-center w-full"> 20 Questions</p>
         </div>
 
         <div className="w-52 flex p-4 aspect-[8.5/11] bg-white border items-center border-black rounded-lg">
-          <p className="mt-auto text-center w-full"> 30 </p>
+          <p className="mt-auto text-center w-full"> 30 Questions</p>
         </div>
 
         <div className="w-52 flex p-4 aspect-[8.5/11] bg-white border items-center border-black rounded-lg">
@@ -31,7 +31,7 @@ export default function IdentificationSheets() {
         </div>
 
         <div className="w-52 flex p-4 aspect-[8.5/11] bg-white border items-center border-black rounded-lg">
-          <p className="mt-auto text-center w-full"> 50 </p>
+          <p className="mt-auto text-center w-full"> 50 Questions</p>
         </div>
       </div>
     </div>

@@ -1,7 +1,3 @@
-type CreateUserDto = {
-  email: string;
-};
-
 export default async function createUser(userData: CreateUserDto) {
   try {
     const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/users`, {
@@ -19,7 +15,7 @@ export default async function createUser(userData: CreateUserDto) {
     const result = await response.json();
     return result;
   } catch (error) {
-    console.error(error);
+    console.error('Error creating user:', error);
     throw error;
   }
 }
