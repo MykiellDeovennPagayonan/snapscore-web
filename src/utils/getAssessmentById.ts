@@ -32,3 +32,28 @@ export async function getEssayAssessmentById(assessmentId: string, type: "essay"
   }
   return returnData;
 };
+
+export async function getIdentificationAssessmentById(
+  assessmentId: string,
+  type: "identification"
+): Promise<IdentificationAssessment> {
+  const endpoint = `${baseUrl}/identification-assessment/${assessmentId}`;
+  const response = await fetch(endpoint);
+  if (!response.ok) {
+    throw new Error("Failed to fetch identification assessment");
+  }
+  const data = await response.json();
+
+  const returnData: IdentificationAssessment = {
+    id: data.id,
+    name: data.name,
+    type,
+    identificationQuestions: data.identificationQuestions.map((question: any) => ({
+      id: question.id,
+      correctAnswer: question.correctAnswer,
+      // You can include additional properties from question if needed
+    })),
+  };
+
+  return returnData;
+}

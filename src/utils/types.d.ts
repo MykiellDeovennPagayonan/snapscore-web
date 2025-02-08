@@ -48,3 +48,15 @@ type EssayResult = {
   assessment: Assessment;
   questionResults: QuestionResult[];
 }
+
+type IdentificationQuestion = {
+  id: string;
+  correctAnswer: string;
+}
+
+type IdentificationAssessment = {
+  id: string;
+  name: string;
+  type: "identification";
+  identificationQuestions: IdentificationQuestion[];
+}
