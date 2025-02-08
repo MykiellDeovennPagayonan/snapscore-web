@@ -10,6 +10,7 @@ import {
   DialogFooter,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
+import Image from "next/image";
 
 interface AssessmentPreviewProps {
   id: string;
@@ -54,9 +55,13 @@ export default function AssessmentPreview({ id, title, type, onDelete }: Assessm
       <Link href={`/assessments/${id}/${type}`}>
         <div className="flex items-center justify-between p-4 bg-white rounded-lg border border-black">
           <div className="flex items-center gap-2">
-            <div className="w-6 h-6 bg-gray-200 rounded-full flex items-center justify-center">
-              📚
-            </div>
+              <Image
+                src={type === "essay" ? "/images/essay-assessment.svg" : "/images/identification-assessment.svg"}
+                width={58}
+                height={58}
+                alt={"identification assessment icon"}
+                className="m-auto"
+                />
             <span className="text-gray-700 text-sm">{title}</span>
           </div>
 

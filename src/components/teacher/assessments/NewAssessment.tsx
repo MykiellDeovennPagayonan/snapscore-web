@@ -26,7 +26,7 @@ export default function NewAssessment() {
               className="w-52 flex flex-col p-2 aspect-square border items-center border-black rounded-lg"
             >
               <Image
-                src={"/images/essay-assessment.png"}
+                src={"/images/essay-assessment.svg"}
                 width={154}
                 height={154}
                 alt={"essay assessment icon"}
@@ -39,7 +39,7 @@ export default function NewAssessment() {
               className="w-52 flex flex-col p-2 aspect-square border items-center border-black rounded-lg"
             >
               <Image
-                src={"/images/identification-assessment.png"}
+                src={"/images/identification-assessment.svg"}
                 width={154}
                 height={154}
                 alt={"identification assessment icon"}
