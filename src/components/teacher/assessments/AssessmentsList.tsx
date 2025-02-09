@@ -29,6 +29,7 @@ export default function AssessmentsList() {
 
   useEffect(() => {
     fetchAssessments()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
   const filteredAssessments = assessments.filter((assessment) =>
