@@ -56,3 +56,21 @@ export async function getEssayResultById(id: string): Promise<EssayResult> {
 
   return result
 }
+
+export async function getIdentificationResultById(id: string): Promise<IdentificationResult> {
+  const response = await fetch(`${baseUrl}/identification-results/${id}`, {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error(`Failed to fetch identification result: ${response.statusText}`);
+  }
+
+  const result = await response.json();
+
+  console.log(result);
+
+  return result;
+}

@@ -29,7 +29,7 @@ export default function Assessments({params} : AssessmentsProps) {
     }
     if (params.id && params.resultId) {
       if (pathname.includes("/identification")) {
-        return <IdentificationStudentResult />
+        return <IdentificationStudentResult resultId={params.resultId}/>
       }
       if (pathname.includes("/essay")) {
         return <EssayStudentResult resultId={params.resultId}/>
