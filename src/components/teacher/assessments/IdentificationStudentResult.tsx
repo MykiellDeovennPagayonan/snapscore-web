@@ -2,7 +2,6 @@
 "use client";
 import { useState, useEffect } from 'react';
 import { Check, ArrowLeft, Loader2 } from "lucide-react";
-import Link from 'next/link';
 import { getIdentificationResultById } from '@/utils/getResults';
 import {
   updateIdentificationResult,
@@ -10,17 +9,21 @@ import {
 } from '@/utils/updateIdentificationResults';
 import { Skeleton } from "@/components/ui/skeleton";
 import { useToast } from '@/hooks/use-toast';
+import { useRouter } from 'next/navigation';
 
 const IdentificationStudentResult = ({ resultId }: { resultId: string }) => {
   const [result, setResult] = useState<IdentificationResult | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [saving, setSaving] = useState<boolean>(false);
+  const [backLink, setBackLink] = useState<string>("/assessments")
   const { toast } = useToast();
+  const router = useRouter()
 
   useEffect(() => {
     const loadResult = async () => {
       try {
         const data = await getIdentificationResultById(resultId);
+        setBackLink(`/assessments/${data.assessment.id}/identification`)
         setResult(data);
       } catch (err) {
         console.error('Error fetching identification result:', err);
@@ -57,9 +60,6 @@ const IdentificationStudentResult = ({ resultId }: { resultId: string }) => {
       };
     });
   };
-
-  // Save changes: update the main identification result (student name)
-  // and each question result's correctness.
   const handleSaveChanges = async () => {
     if (!result) return;
     setSaving(true);
@@ -99,9 +99,7 @@ const IdentificationStudentResult = ({ resultId }: { resultId: string }) => {
       {/* Header with a back link and the assessment name */}
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center">
-          <Link href="/assessments">
-            <ArrowLeft className="w-5 h-5" />
-          </Link>
+          <ArrowLeft className="w-5 h-5 hover:cursor-pointer" onClick={() => router.push(backLink)} />
           <h1 className="text-2xl font-bold ml-2">{result.assessment.name}</h1>
         </div>
         <div className="flex items-center space-x-4">

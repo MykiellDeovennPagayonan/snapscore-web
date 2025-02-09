@@ -2,8 +2,8 @@
 "use client"
 import { useState, useEffect } from 'react';
 import { Check, ArrowLeft, Loader2 } from "lucide-react";
-import Link from 'next/link';
-import { getEssayResultById } from '@/utils/getResults'; 
+import { useRouter } from 'next/navigation';
+import { getEssayResultById } from '@/utils/getResults';
 import {
   updateEssayCriteriaResult,
   updateEssayQuestionResult,
@@ -17,14 +17,16 @@ const EssayStudentResult = ({ resultId }: { resultId: string }) => {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [backLink, setBackLink] = useState<string>("/assessments")
   const { toast } = useToast();
-  console.log("HELLO ESSAY!")
+  const router = useRouter()
 
   useEffect(() => {
     const loadResult = async () => {
       try {
         const data = await getEssayResultById(resultId);
         setResult(data);
+        setBackLink(`/assessments/${data.assessment.id}/essay`)
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Failed to load result');
       } finally {
@@ -131,9 +133,7 @@ const EssayStudentResult = ({ resultId }: { resultId: string }) => {
     <div className="w-full p-4">
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center">
-          <Link href="/assessments">
-            <ArrowLeft className="w-5 h-5" />
-          </Link>
+          <ArrowLeft className="w-5 h-5 hover:cursor-pointer" onClick={() => router.push(backLink)} />
           <h1 className="text-2xl font-bold ml-2">{result.assessment.name}</h1>
         </div>
         <div className="flex items-center space-x-4">

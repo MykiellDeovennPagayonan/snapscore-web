@@ -88,9 +88,13 @@ export default function StudentList({ assessmentId, type }: StudentListProps) {
           <ImageUploader
             type={type}
             assessmentId={assessmentId}
+            onSuccess={fetchResults}
           />
         ) : (
-          <ImageUploader type={type} assessmentId={assessmentId} />
+          <ImageUploader
+            type={type}
+            assessmentId={assessmentId}
+            onSuccess={fetchResults} />
         )}
       </div>
 
@@ -107,7 +111,7 @@ export default function StudentList({ assessmentId, type }: StudentListProps) {
         </div>
       </div>
 
-      <div className="p-4">
+      <div className="p-4 space-y-2">
         {resultsLoading ? (
           <div className="space-y-2">
             <Skeleton className="w-full h-12" />

@@ -23,10 +23,10 @@ import { checkIdentification } from '@/utils/checkIdentification'
 interface ImageUploaderProps {
   type: 'essay' | 'identification'
   assessmentId: string
-  essayCriteria?: EssayCriteria
+  onSuccess: () => void
 }
 
-export default function ImageUploader({ type, assessmentId }: ImageUploaderProps) {
+export default function ImageUploader({ type, assessmentId, onSuccess }: ImageUploaderProps) {
   // const router = useRouter()
   const [file, setFile] = useState<File | null>(null)
   const [isLoading, setIsLoading] = useState(false)
@@ -46,21 +46,13 @@ export default function ImageUploader({ type, assessmentId }: ImageUploaderProps
       if (type === 'essay') {
         const essayResult = await rateEssay(file, assessmentId)
         console.log("Essay result:", essayResult)
-        setMessage({ 
-          type: 'success', 
-          text: `Essay submitted successfully! Score: ${essayResult.score.toFixed(1)}%` 
-        })
       } else if (type === 'identification') {
         const identificationResult = await checkIdentification(file, assessmentId)
         console.log("Identification result:", identificationResult)
-        setMessage({ 
-          type: 'success', 
-          text: `Identification submitted successfully! Student: ${identificationResult.studentName}` 
-        })
       }
 
-      // Optionally, navigate to a details page:
-      // router.push(`/assessments/${assessmentId}/${type}/${resultId}`)
+      onSuccess()
+      setFile(null)
     } catch (error) {
       console.error(error)
       setMessage({ type: 'error', text: 'Failed to process image. Please try again.' })
