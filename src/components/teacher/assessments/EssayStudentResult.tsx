@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client"
 import { useState, useEffect } from 'react';
-import { Eye, Check, ArrowLeft, Loader2 } from "lucide-react";
+import { Check, ArrowLeft, Loader2 } from "lucide-react";
 import Link from 'next/link';
 import { getEssayResultById } from '@/utils/getResults'; 
 import {
@@ -18,6 +18,7 @@ const EssayStudentResult = ({ resultId }: { resultId: string }) => {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const { toast } = useToast();
+  console.log("HELLO ESSAY!")
 
   useEffect(() => {
     const loadResult = async () => {
@@ -136,9 +137,9 @@ const EssayStudentResult = ({ resultId }: { resultId: string }) => {
           <h1 className="text-2xl font-bold ml-2">{result.assessment.name}</h1>
         </div>
         <div className="flex items-center space-x-4">
-          <button className="p-2">
+          {/* <button className="p-2">
             <Eye />
-          </button>
+          </button> */}
           <button className="p-2" onClick={handleSave} disabled={saving}>
             {saving ? (
               <Loader2 className="w-5 h-5 animate-spin" />

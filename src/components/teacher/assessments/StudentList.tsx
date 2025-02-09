@@ -29,21 +29,6 @@ export default function StudentList({ assessmentId, type }: StudentListProps) {
   const [assessment, setAssessment] = useState<EssayAssessment | IdentificationAssessment | null>(null);
 
   useEffect(() => {
-    const fetchResults = async () => {
-      setResultsLoading(true);
-      try {
-        const data =
-          type === "essay"
-            ? await fetchEssayResults(assessmentId)
-            : await fetchIdentificationResults(assessmentId);
-        setResults(data.results);
-      } catch (err) {
-        console.error("Error fetching results:", err);
-      } finally {
-        setResultsLoading(false);
-      }
-    };
-
     const fetchName = async () => {
       setNameLoading(true);
       try {
@@ -65,6 +50,21 @@ export default function StudentList({ assessmentId, type }: StudentListProps) {
     fetchResults();
     fetchName();
   }, [assessmentId, type]);
+
+  const fetchResults = async () => {
+    setResultsLoading(true);
+    try {
+      const data =
+        type === "essay"
+          ? await fetchEssayResults(assessmentId)
+          : await fetchIdentificationResults(assessmentId);
+      setResults(data.results);
+    } catch (err) {
+      console.error("Error fetching results:", err);
+    } finally {
+      setResultsLoading(false);
+    }
+  };
 
   const filteredResults = results.filter((result) =>
     result.studentName.toLowerCase().includes(searchQuery.toLowerCase())
@@ -107,16 +107,16 @@ export default function StudentList({ assessmentId, type }: StudentListProps) {
         </div>
       </div>
 
-      {filteredResults.length === 0 ? (
-        <div className="text-center text-gray-500 mt-8">No results found</div>
-      ) : (
-        <div className="space-y-2 p-4">
-          {resultsLoading ? (
-            <div className="space-y-2">
-              <Skeleton className="w-full h-12" />
-              <Skeleton className="w-full h-12" />
-              <Skeleton className="w-full h-12" />
-            </div>
+      <div className="p-4">
+        {resultsLoading ? (
+          <div className="space-y-2">
+            <Skeleton className="w-full h-12" />
+            <Skeleton className="w-full h-12" />
+            <Skeleton className="w-full h-12" />
+          </div>
+        ) : (
+          filteredResults.length === 0 ? (
+            <div className="text-center text-gray-500 mt-8">No results found</div>
           ) : (
             filteredResults.map((result) => (
               <StudentPreview
@@ -128,9 +128,9 @@ export default function StudentList({ assessmentId, type }: StudentListProps) {
                 score={result.score}
               />
             ))
-          )}
-        </div>
-      )}
+          )
+        )}
+      </div>
     </div>
   );
 }

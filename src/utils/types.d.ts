@@ -60,3 +60,24 @@ type IdentificationAssessment = {
   type: "identification";
   identificationQuestions: IdentificationQuestion[];
 }
+
+type IdentificationQuestionResult = {
+  id: string;
+  isCorrect: boolean;
+  answer: string;
+  questionId: string;
+  question: {
+    id: string;
+    correctAnswer: string;
+  };
+  createdAt: Date;
+}
+
+type IdentificationResult = {
+  id: string;
+  studentName: string;
+  paperImage: string;
+  createdAt: Date;
+  assessment: IdentificationAssessment;
+  questionResults: IdentificationQuestionResult[];
+}
