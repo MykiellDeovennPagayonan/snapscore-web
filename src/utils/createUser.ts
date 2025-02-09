@@ -1,4 +1,5 @@
 export default async function createUser(userData: CreateUserDto) {
+  console.log(userData)
   try {
     const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/users`, {
       method: 'POST',
@@ -9,6 +10,7 @@ export default async function createUser(userData: CreateUserDto) {
     });
 
     if (!response.ok) {
+      console.error(response.statusText)
       throw new Error(`Failed to create user: ${response.statusText}`);
     }
 
