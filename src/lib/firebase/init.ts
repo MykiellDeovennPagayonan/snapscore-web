@@ -1,8 +1,5 @@
-import * as dotenv from 'dotenv';
 import { initializeApp, getApps } from "firebase/app";
-import { getAuth } from "firebase/auth"
-
-dotenv.config({ path: ".env" });
+import { getAuth, GoogleAuthProvider } from "firebase/auth";
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -14,8 +11,8 @@ const firebaseConfig = {
   measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
 };
 
-const app = !getApps().length ? initializeApp(firebaseConfig) : getApps()[0]
-const auth = getAuth(app)
+const app = !getApps().length ? initializeApp(firebaseConfig) : getApps()[0];
+const auth = getAuth(app);
+const googleProvider = new GoogleAuthProvider();
 
-export {app, auth}
-// const analytics = getAnalytics(app);
+export { app, auth, googleProvider };

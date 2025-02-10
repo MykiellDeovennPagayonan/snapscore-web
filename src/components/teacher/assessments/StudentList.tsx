@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 import { useEffect, useState } from "react";
@@ -5,7 +6,7 @@ import { ArrowLeft, Search } from "lucide-react";
 import StudentPreview from "./StudentPreview";
 import Link from "next/link";
 import ImageUploader from "@/components/essay/ImageUploader";
-import { fetchEssayResults, fetchIdentificationResults } from "../../../utils/getResults"
+import { fetchEssayResults, fetchIdentificationResults } from "../../../utils/getResults";
 import { getEssayAssessmentById, getIdentificationAssessmentById } from "@/utils/getAssessmentById";
 import { Skeleton } from "@/components/ui/skeleton";
 
@@ -83,19 +84,7 @@ export default function StudentList({ assessmentId, type }: StudentListProps) {
             {assessment ? assessment.name : "Untitled Assessment"}
           </h1>
         )}
-        {/* For essay assessments, pass essayCriteria; for identification, simply render the uploader */}
-        {type === "essay" && assessment ? (
-          <ImageUploader
-            type={type}
-            assessmentId={assessmentId}
-            onSuccess={fetchResults}
-          />
-        ) : (
-          <ImageUploader
-            type={type}
-            assessmentId={assessmentId}
-            onSuccess={fetchResults} />
-        )}
+        <ImageUploader type={type} assessmentId={assessmentId} onSuccess={fetchResults} />
       </div>
 
       <div className="p-4">
@@ -118,11 +107,11 @@ export default function StudentList({ assessmentId, type }: StudentListProps) {
             <Skeleton className="w-full h-12" />
             <Skeleton className="w-full h-12" />
           </div>
+        ) : filteredResults.length === 0 ? (
+          <div className="text-center text-gray-500 mt-8">No results found</div>
         ) : (
-          filteredResults.length === 0 ? (
-            <div className="text-center text-gray-500 mt-8">No results found</div>
-          ) : (
-            filteredResults.map((result) => (
+          filteredResults.map((result : any) => {
+            return (
               <StudentPreview
                 key={result.id}
                 type={type}
@@ -130,9 +119,10 @@ export default function StudentList({ assessmentId, type }: StudentListProps) {
                 resultId={result.id}
                 name={result.studentName}
                 score={result.score}
+                onDelete={fetchResults}
               />
-            ))
-          )
+            )
+          })
         )}
       </div>
     </div>

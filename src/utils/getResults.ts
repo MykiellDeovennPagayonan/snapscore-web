@@ -9,7 +9,7 @@ export async function fetchEssayResults(assessmentId: string) {
     throw new Error("Failed to fetch essay results");
   }
   const data = await response.json();
-  console.log(data)
+  console.log(data);
   return {
     results: data.map((result: any) => ({
       id: result.id,
@@ -28,21 +28,29 @@ export async function fetchIdentificationResults(assessmentId: string) {
     throw new Error("Failed to fetch identification results");
   }
   const data = await response.json();
-  console.log(data)
+  console.log(data);
   return {
-    results: data.map((result: any) => ({
-      id: result.id,
-      studentName: result.studentName,
-      score: result.score,
-      createdAt: new Date(result.createdAt),
-    })),
+    results: data.map((result: any) => {
+      let score = 0;
+      result.questionResults.forEach((qr: { isCorrect: any }) => {
+        if (qr.isCorrect) {
+          score++;
+        }
+      });
+      return {
+        id: result.id,
+        studentName: result.studentName,
+        score: score,
+        createdAt: new Date(result.createdAt),
+      };
+    }),
   };
 }
 
 export async function getEssayResultById(id: string): Promise<EssayResult> {
   const response = await fetch(`${baseUrl}/essay-results/${id}`, {
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
   });
 
@@ -50,22 +58,26 @@ export async function getEssayResultById(id: string): Promise<EssayResult> {
     throw new Error(`Failed to fetch essay result: ${response.statusText}`);
   }
 
-  const result = await response.json()
+  const result = await response.json();
 
-  console.log(result)
+  console.log(result);
 
-  return result
+  return result;
 }
 
-export async function getIdentificationResultById(id: string): Promise<IdentificationResult> {
+export async function getIdentificationResultById(
+  id: string
+): Promise<IdentificationResult> {
   const response = await fetch(`${baseUrl}/identification-results/${id}`, {
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
   });
 
   if (!response.ok) {
-    throw new Error(`Failed to fetch identification result: ${response.statusText}`);
+    throw new Error(
+      `Failed to fetch identification result: ${response.statusText}`
+    );
   }
 
   const result = await response.json();
