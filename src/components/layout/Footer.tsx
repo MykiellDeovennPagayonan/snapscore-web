@@ -25,7 +25,7 @@ const Footer: FC = () => {
           </div>
 
           {/* Product Section */}
-          <div className="col-span-1">
+          {/* <div className="col-span-1">
             <h2 className="text-xl mb-4">PRODUCT:</h2>
             <ul className="space-y-2">
               <li>
@@ -39,7 +39,7 @@ const Footer: FC = () => {
                 </Link>
               </li>
             </ul>
-          </div>
+          </div> */}
 
           {/* Company Info Section */}
           <div className="col-span-1">
