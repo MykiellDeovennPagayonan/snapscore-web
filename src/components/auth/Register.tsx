@@ -99,15 +99,12 @@ export default function Register() {
         return true;
       }
 
-      // Then check our database
-      // const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/users/search?email=${email}`);
-      // if (!response.ok) {
-      //   throw new Error('Failed to check email in database');
-      // }
-      // const data = await response.json();
-      // return data.length > 0;
-      return false
-
+      const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/users/exists?email=${email}`);
+      if (!response.ok) {
+        throw new Error('Failed to check email in database');
+      }
+      const data = await response.json();
+      return data.exists;
     } catch (error) {
       console.error('Error checking email:', error);
       throw new Error("We couldn't verify if this email is available. Please try again.");
@@ -139,7 +136,6 @@ export default function Register() {
 
       setLoading(true);
 
-      // Check if email exists before attempting to create user
       const emailExists = await checkEmailExists(email);
       console.log(emailExists)
       if (emailExists) {

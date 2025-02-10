@@ -37,6 +37,7 @@ export async function getIdentificationAssessmentById(
   assessmentId: string,
   type: "identification"
 ): Promise<IdentificationAssessment> {
+  console.log("waaaa")
   const endpoint = `${baseUrl}/identification-assessment/${assessmentId}`;
   const response = await fetch(endpoint);
   if (!response.ok) {
@@ -51,7 +52,6 @@ export async function getIdentificationAssessmentById(
     identificationQuestions: data.identificationQuestions.map((question: any) => ({
       id: question.id,
       correctAnswer: question.correctAnswer,
-      // You can include additional properties from question if needed
     })),
   };
 
