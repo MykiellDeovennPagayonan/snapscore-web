@@ -264,7 +264,7 @@ export default function Register() {
           />
 
           <label htmlFor="terms" className="text-sm text-gray-600">
-            You agree to our <a href="/terms" className="text-blue-600 hover:underline">Terms of Service</a> and <a href="/privacy" className="text-blue-600 hover:underline">Privacy Policy</a>
+            You agree to our <a href="/terms-of-service" className="text-blue-600 hover:underline">Terms of Service</a> and <a href="/privacy-policy" className="text-blue-600 hover:underline">Privacy Policy</a>
           </label>
         </div>
         <button

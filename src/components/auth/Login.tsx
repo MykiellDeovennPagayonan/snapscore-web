@@ -157,11 +157,11 @@ export default function TeacherLogin() {
         </div>
         <div className="text-center text-sm text-gray-600">
           By entering your username and password, you agree to our{" "}
-          <Link href="/terms" className="text-blue-600 hover:underline">
+          <Link href="/terms-of-service" className="text-blue-600 hover:underline">
             Terms of Service
           </Link>{" "}
           and{" "}
-          <Link href="/privacy" className="text-blue-600 hover:underline">
+          <Link href="/privacy-policy" className="text-blue-600 hover:underline">
             Privacy Policy
           </Link>.
         </div>
