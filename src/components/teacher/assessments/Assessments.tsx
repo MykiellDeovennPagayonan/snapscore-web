@@ -8,6 +8,8 @@ import CreateIdentificationAssessment from "./create/CreateIdentificationAssessm
 import CreateEssayAssessment from "./create/CreateEssayAssessment";
 import IdentificationStudentResult from "./IdentificationStudentResult";
 import EssayStudentResult from "./EssayStudentResult";
+import EditEssayAssessment from "./edit/EditEssayAssessment";
+import EditIdentificationAssessment from "./edit/EditIdentificationAssessment";
 
 interface AssessmentsProps {
   params: {
@@ -29,9 +31,15 @@ export default function Assessments({params} : AssessmentsProps) {
     }
     if (params.id && params.resultId) {
       if (pathname.includes("/identification")) {
+        if (pathname.includes("/result")) {
+          return <EditIdentificationAssessment />
+        }
         return <IdentificationStudentResult resultId={params.resultId}/>
       }
       if (pathname.includes("/essay")) {
+        if (pathname.includes("/result")) {
+          <EditEssayAssessment />
+        }
         return <EssayStudentResult resultId={params.resultId}/>
       }
     }
