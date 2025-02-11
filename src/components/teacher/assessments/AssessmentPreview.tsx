@@ -52,7 +52,7 @@ export default function AssessmentPreview({ id, title, type, onDelete }: Assessm
 
   return (
     <div className="relative">
-      <Link href={`/assessments/${id}/${type}`}>
+      <Link href={`/assessments/${id}/${type}/results`}>
         <div className="flex items-center justify-between p-4 bg-white rounded-lg border border-black">
           <div className="flex items-center gap-2">
               <Image

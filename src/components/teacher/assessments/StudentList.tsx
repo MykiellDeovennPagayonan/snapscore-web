@@ -138,7 +138,7 @@ export default function StudentList({ assessmentId, type }: StudentListProps) {
           onClick={handleNavigation}
           className={`flex-1 py-2 px-4 rounded-md transition-all bg-gray-200 text-gray-700 hover:bg-gray-300`}
         >
-          Results
+          Edit Asessment
         </button>
       </div>
     </div>
