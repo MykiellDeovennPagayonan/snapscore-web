@@ -37,6 +37,8 @@ const EditEssayAssessment = () => {
   const pathname = usePathname();
   // const [user] = useAuthState(auth);
 
+  console.log("hello")
+
   const handleNavigation = () => {
     const pathSegments = pathname.split("/");
     pathSegments.pop();

@@ -31,14 +31,14 @@ export default function Assessments({params} : AssessmentsProps) {
     }
     if (params.id && params.resultId) {
       if (pathname.includes("/identification")) {
-        if (pathname.includes("/result")) {
+        if (pathname.includes("/results")) {
           return <EditIdentificationAssessment />
         }
         return <IdentificationStudentResult resultId={params.resultId}/>
       }
       if (pathname.includes("/essay")) {
-        if (pathname.includes("/result")) {
-          <EditEssayAssessment />
+        if (pathname.includes("/results")) {
+          return <EditEssayAssessment />
         }
         return <EssayStudentResult resultId={params.resultId}/>
       }
