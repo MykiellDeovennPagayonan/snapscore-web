@@ -21,13 +21,13 @@ export default function TeacherLogin() {
     try {
       setError("");
       const result = await signInWithGoogle();
-      
+
       if (result) {
         router.push("/assessments");
       }
     } catch (err) {
       const errorMessage = (err as Error).message;
-      
+
       if (errorMessage.includes('popup-closed-by-user')) {
         setError("Sign-in was cancelled. Please try again.");
       } else if (errorMessage.includes('popup-blocked')) {
@@ -85,7 +85,7 @@ export default function TeacherLogin() {
       }
 
       const res = await signInWithEmailAndPassword(email, password);
-      
+
       if (!res) {
         setError("Invalid email or password")
       } else {
@@ -93,7 +93,7 @@ export default function TeacherLogin() {
       }
     } catch (err) {
       const errorMessage = (err as Error).message || "";
-      
+
       // Convert Firebase errors to user-friendly messages
       if (errorMessage.includes('auth/user-not-found')) {
         setError("We couldn't find an account with this email address. Need to create one?");
@@ -127,7 +127,7 @@ export default function TeacherLogin() {
         </div>
       )}
       <form onSubmit={handleSubmit} className="space-y-4">
-      <div>
+        <div>
           <label htmlFor="email" className="block text-sm font-medium text-gray-700">
             Email
           </label>
@@ -176,12 +176,16 @@ export default function TeacherLogin() {
             <Image src="/microsoft-icon.png" alt="Microsoft" width={24} height={24} />
           </button>
         </div> */}
+        <div>
+          <Link href="/auth/forgot-password" className="text-sm text-blue-600 hover:underline">
+            Forgot Password?
+          </Link>
+        </div>
         <button
           type="submit"
           disabled={loading || googleLoading}
-          className={`w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white ${
-            loading || googleLoading ? "bg-gray-400" : "bg-blue-600 hover:bg-blue-700"
-          } focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500`}
+          className={`w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white ${loading || googleLoading ? "bg-gray-400" : "bg-blue-600 hover:bg-blue-700"
+            } focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500`}
         >
           {loading ? "Logging in..." : "Login"}
         </button>
@@ -199,9 +203,8 @@ export default function TeacherLogin() {
         type="button"
         onClick={handleGoogleSignIn}
         disabled={loading || googleLoading}
-        className={`w-full flex items-center justify-center px-4 py-2 border ${
-          loading || googleLoading ? 'bg-gray-100' : 'bg-white hover:bg-gray-50'
-        } border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500`}
+        className={`w-full flex items-center justify-center px-4 py-2 border ${loading || googleLoading ? 'bg-gray-100' : 'bg-white hover:bg-gray-50'
+          } border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500`}
       >
         <Image
           src="/images/google-logo.svg"

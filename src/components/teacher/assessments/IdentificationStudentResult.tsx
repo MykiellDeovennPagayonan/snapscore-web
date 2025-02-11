@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
-import { useState, useEffect } from 'react';
-import { Check, ArrowLeft, Loader2 } from "lucide-react";
+import { useState, useEffect, useRef } from 'react';
+import { Check, ArrowLeft, Loader2, MoreVertical } from "lucide-react";
 import { getIdentificationResultById } from '@/utils/getResults';
 import {
   updateIdentificationResult,
@@ -15,15 +15,19 @@ const IdentificationStudentResult = ({ resultId }: { resultId: string }) => {
   const [result, setResult] = useState<IdentificationResult | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [saving, setSaving] = useState<boolean>(false);
-  const [backLink, setBackLink] = useState<string>("/assessments")
+  const [backLink, setBackLink] = useState<string>("/assessments");
+  // activePopup holds the id of the question result whose dropdown is open
+  const [activePopup, setActivePopup] = useState<string | null>(null);
+  // A ref to the currently open dropdown container
+  const activeDropdownRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
-  const router = useRouter()
+  const router = useRouter();
 
   useEffect(() => {
     const loadResult = async () => {
       try {
         const data = await getIdentificationResultById(resultId);
-        setBackLink(`/assessments/${data.assessment.id}/identification`)
+        setBackLink(`/assessments/${data.assessment.id}/identification`);
         setResult(data);
       } catch (err) {
         console.error('Error fetching identification result:', err);
@@ -40,26 +44,45 @@ const IdentificationStudentResult = ({ resultId }: { resultId: string }) => {
     loadResult();
   }, [resultId, toast]);
 
+  // Close the dropdown when clicking outside of it.
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        activeDropdownRef.current &&
+        !activeDropdownRef.current.contains(event.target as Node)
+      ) {
+        setActivePopup(null);
+      }
+    }
+    if (activePopup) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [activePopup]);
+
   // Calculate total score as the count of correct answers.
   const calculateTotalScore = (): number => {
     if (!result) return 0;
     return result.questionResults.filter((qr) => qr.isCorrect).length;
   };
 
-  // Toggle the correctness of a given question result.
-  const toggleQuestionCorrectness = (questionResultId: string) => {
+  // Update the correctness flag of a given question result.
+  const handleSetCorrectness = (questionResultId: string, isCorrect: boolean) => {
     setResult((prev) => {
       if (!prev) return prev;
       return {
         ...prev,
         questionResults: prev.questionResults.map((qr) =>
-          qr.id === questionResultId
-            ? { ...qr, isCorrect: !qr.isCorrect }
-            : qr
+          qr.id === questionResultId ? { ...qr, isCorrect } : qr
         ),
       };
     });
+    // Close the dropdown after updating.
+    setActivePopup(null);
   };
+
   const handleSaveChanges = async () => {
     if (!result) return;
     setSaving(true);
@@ -99,15 +122,14 @@ const IdentificationStudentResult = ({ resultId }: { resultId: string }) => {
       {/* Header with a back link and the assessment name */}
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center">
-          <ArrowLeft className="w-5 h-5 hover:cursor-pointer" onClick={() => router.push(backLink)} />
+          <ArrowLeft
+            className="w-5 h-5 hover:cursor-pointer"
+            onClick={() => router.push(backLink)}
+          />
           <h1 className="text-2xl font-bold ml-2">{result.assessment.name}</h1>
         </div>
         <div className="flex items-center space-x-4">
-          <button
-            className="p-2"
-            onClick={handleSaveChanges}
-            disabled={saving}
-          >
+          <button className="p-2" onClick={handleSaveChanges} disabled={saving}>
             {saving ? (
               <Loader2 className="w-5 h-5 animate-spin" />
             ) : (
@@ -148,18 +170,49 @@ const IdentificationStudentResult = ({ resultId }: { resultId: string }) => {
             className="flex items-center justify-between border rounded-md p-2"
           >
             <div className="flex items-center flex-1">
-              <span className="mr-2">{index + 1}. </span>
+              <span className="mr-2">{index + 1}.</span>
               <span className={qr.isCorrect ? 'text-green-600' : 'text-red-600'}>
                 {qr.answer}
               </span>
             </div>
-            <button
-              onClick={() => toggleQuestionCorrectness(qr.id)}
-              className="ml-2 px-2"
+            {/* Dropdown container */}
+            <div
+              className="relative"
+              ref={activePopup === qr.id ? activeDropdownRef : undefined}
             >
-              {/* The ⋮ button can be replaced with a proper options menu if needed */}
-              ⋮
-            </button>
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  // Toggle dropdown for this question result.
+                  setActivePopup(activePopup === qr.id ? null : qr.id);
+                }}
+                className="p-1 hover:bg-gray-100 rounded-full"
+              >
+                <MoreVertical className="w-5 h-5 text-gray-500" />
+              </button>
+              {activePopup === qr.id && (
+                <div className="absolute right-0 mt-2 w-32 bg-white rounded-md shadow-lg z-10 border border-gray-200">
+                  <div
+                    className="px-4 py-2 text-sm text-green-600 hover:bg-green-50 cursor-pointer"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleSetCorrectness(qr.id, true);
+                    }}
+                  >
+                    Right
+                  </div>
+                  <div
+                    className="px-4 py-2 text-sm text-red-600 hover:bg-red-50 cursor-pointer"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleSetCorrectness(qr.id, false);
+                    }}
+                  >
+                    Wrong
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
         ))}
       </div>
