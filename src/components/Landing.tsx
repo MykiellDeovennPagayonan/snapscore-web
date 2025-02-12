@@ -25,12 +25,12 @@ const Landing = () => {
       <div className="grid md:grid-cols-2 gap-8 mb-24">
         <div className="relative h-64 group transform hover:scale-105 transition-transform duration-200">
           <div className="absolute inset-0 bg-gray-900 rounded-xl overflow-hidden">
-            {/* <Image
-              src="/images/writing.jpg"
+            <Image
+              src="/images/writing.png"
               alt="Student writing notes"
               fill
               className="object-cover opacity-80 group-hover:opacity-70 transition-opacity duration-200"
-            /> */}
+            />
             <div className="absolute inset-0 bg-gradient-to-b from-transparent to-gray-900/70" />
             <div className="absolute bottom-6 left-6 text-white">
               <h3 className="text-2xl font-bold mb-2">Snap it.</h3>
@@ -40,12 +40,12 @@ const Landing = () => {
         </div>
         <div className="relative h-64 group transform hover:scale-105 transition-transform duration-200">
           <div className="absolute inset-0 bg-gray-900 rounded-xl overflow-hidden">
-            {/* <Image
-              src="/images/grading.jpg"
+            <Image
+              src="/images/grading.png"
               alt="Grading papers"
               fill
               className="object-cover opacity-80 group-hover:opacity-70 transition-opacity duration-200"
-            /> */}
+            />
             <div className="absolute inset-0 bg-gradient-to-b from-transparent to-gray-900/70" />
             <div className="absolute bottom-6 left-6 text-white">
               <h3 className="text-2xl font-bold mb-2">Score it.</h3>
