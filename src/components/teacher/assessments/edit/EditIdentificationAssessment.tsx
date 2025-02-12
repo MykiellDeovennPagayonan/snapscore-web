@@ -34,7 +34,6 @@ const EditIdentificationAssessment = () => {
     const pathSegments = pathname.split("/");
     pathSegments.pop();
     const newPath = pathSegments.join("/");
-
     router.push(newPath);
   };
 
@@ -50,7 +49,6 @@ const EditIdentificationAssessment = () => {
           throw new Error("Failed to fetch identification assessment");
         }
         const data = await response.json();
-        // Assuming the returned data has a "name" and "identificationQuestions" array.
         setAssessmentName(data.name || "");
         const fetchedAnswers: Answer[] = data.identificationQuestions.map(
           (q: any, index: number) => ({
@@ -114,7 +112,6 @@ const EditIdentificationAssessment = () => {
       const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL;
       const payload = {
         name: assessmentName,
-        // Convert the answers array to the expected questions format.
         questions: answers.map((answer) => ({
           correctAnswer: answer.value.trim(),
         })),
@@ -135,7 +132,7 @@ const EditIdentificationAssessment = () => {
         throw new Error("Failed to update identification assessment");
       }
       showToast("Answer sheet updated successfully!", "success");
-      setTimeout(() => router.push("/assessments"), 1500);
+      window.location.reload()
     } catch (error) {
       console.error("Error updating answer sheet:", error);
       showToast("Failed to update answer sheet", "error");
@@ -148,8 +145,9 @@ const EditIdentificationAssessment = () => {
     <div className="w-full p-4 relative">
       {toast && (
         <div
-          className={`fixed top-4 right-4 p-4 rounded-md shadow-lg transition-all ${toast.type === "success" ? "bg-green-500" : "bg-red-500"
-            } text-white`}
+          className={`fixed top-4 right-4 p-4 rounded-md shadow-lg transition-all ${
+            toast.type === "success" ? "bg-green-500" : "bg-red-500"
+          } text-white`}
         >
           {toast.message}
         </div>
@@ -220,20 +218,22 @@ const EditIdentificationAssessment = () => {
           <button
             onClick={handleNavigation}
             disabled={isLoading}
-            className={`flex-1 py-2 px-4 rounded-md transition-all ${isLoading
-              ? "bg-gray-300 cursor-not-allowed"
-              : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-              }`}
+            className={`flex-1 py-2 px-4 rounded-md transition-all ${
+              isLoading
+                ? "bg-gray-300 cursor-not-allowed"
+                : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+            }`}
           >
             Results
           </button>
           <button
             onClick={handleSave}
             disabled={isLoading}
-            className={`flex-1 py-2 px-4 rounded-md transition-all ${isLoading
-              ? "bg-gray-300 cursor-not-allowed"
-              : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-              }`}
+            className={`flex-1 py-2 px-4 rounded-md transition-all ${
+              isLoading
+                ? "bg-gray-300 cursor-not-allowed"
+                : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+            }`}
           >
             {isLoading ? "Saving..." : "Save Changes"}
           </button>

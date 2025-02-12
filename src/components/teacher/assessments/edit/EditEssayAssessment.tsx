@@ -5,7 +5,6 @@ import { useState, useEffect } from "react";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-
 import { useParams, usePathname, useRouter } from "next/navigation";
 
 interface Rubric {
@@ -35,15 +34,11 @@ const EditEssayAssessment = () => {
   const router = useRouter();
   const { id: assessmentId } = useParams();
   const pathname = usePathname();
-  // const [user] = useAuthState(auth);
-
-  console.log("hello")
 
   const handleNavigation = () => {
     const pathSegments = pathname.split("/");
     pathSegments.pop();
     const newPath = pathSegments.join("/");
-
     router.push(newPath);
   };
 
@@ -107,11 +102,11 @@ const EditEssayAssessment = () => {
       prev.map((question) =>
         question.id === questionId
           ? {
-            ...question,
-            essayCriteria: question.essayCriteria.map((criteria) =>
-              criteria.id === criteriaId ? { ...criteria, [field]: value } : criteria
-            ),
-          }
+              ...question,
+              essayCriteria: question.essayCriteria.map((criteria) =>
+                criteria.id === criteriaId ? { ...criteria, [field]: value } : criteria
+              ),
+            }
           : question
       )
     );
@@ -128,18 +123,18 @@ const EditEssayAssessment = () => {
       prev.map((question) =>
         question.id === questionId
           ? {
-            ...question,
-            essayCriteria: question.essayCriteria.map((criteria) =>
-              criteria.id === criteriaId
-                ? {
-                  ...criteria,
-                  rubrics: criteria.rubrics.map((rubric, index) =>
-                    index === rubricIndex ? { ...rubric, [field]: value } : rubric
-                  ),
-                }
-                : criteria
-            ),
-          }
+              ...question,
+              essayCriteria: question.essayCriteria.map((criteria) =>
+                criteria.id === criteriaId
+                  ? {
+                      ...criteria,
+                      rubrics: criteria.rubrics.map((rubric, index) =>
+                        index === rubricIndex ? { ...rubric, [field]: value } : rubric
+                      ),
+                    }
+                  : criteria
+              ),
+            }
           : question
       )
     );
@@ -150,20 +145,20 @@ const EditEssayAssessment = () => {
       prev.map((question) =>
         question.id === questionId
           ? {
-            ...question,
-            essayCriteria: [
-              ...question.essayCriteria,
-              {
-                id: question.essayCriteria.length + 1,
-                criteria: "New Criteria",
-                maxScore: 0,
-                rubrics: [
-                  { score: "0", description: "Poor performance" },
-                  { score: "0", description: "Fair performance" },
-                ],
-              },
-            ],
-          }
+              ...question,
+              essayCriteria: [
+                ...question.essayCriteria,
+                {
+                  id: question.essayCriteria.length + 1,
+                  criteria: "New Criteria",
+                  maxScore: 0,
+                  rubrics: [
+                    { score: "0", description: "Poor performance" },
+                    { score: "0", description: "Fair performance" },
+                  ],
+                },
+              ],
+            }
           : question
       )
     );
@@ -174,11 +169,11 @@ const EditEssayAssessment = () => {
       prev.map((question) =>
         question.id === questionId
           ? {
-            ...question,
-            essayCriteria: question.essayCriteria.filter(
-              (criteria) => criteria.id !== criteriaId
-            ),
-          }
+              ...question,
+              essayCriteria: question.essayCriteria.filter(
+                (criteria) => criteria.id !== criteriaId
+              ),
+            }
           : question
       )
     );
@@ -189,19 +184,19 @@ const EditEssayAssessment = () => {
       prev.map((question) =>
         question.id === questionId
           ? {
-            ...question,
-            essayCriteria: question.essayCriteria.map((criteria) =>
-              criteria.id === criteriaId
-                ? {
-                  ...criteria,
-                  rubrics: [
-                    ...criteria.rubrics,
-                    { score: "0", description: "New level description" },
-                  ],
-                }
-                : criteria
-            ),
-          }
+              ...question,
+              essayCriteria: question.essayCriteria.map((criteria) =>
+                criteria.id === criteriaId
+                  ? {
+                      ...criteria,
+                      rubrics: [
+                        ...criteria.rubrics,
+                        { score: "0", description: "New level description" },
+                      ],
+                    }
+                  : criteria
+              ),
+            }
           : question
       )
     );
@@ -245,17 +240,17 @@ const EditEssayAssessment = () => {
     setIsLoading(true);
 
     // Prepare the payload similar to the create payload.
-    // Note: We only send what your backend expects to update.
     const transformedData = {
       name: essayName,
-      // You might not need to send the firebaseId on update.
-      // If your endpoint supports nested updates, include questions.
       questions: questions.map((q) => ({
         question: q.question,
         essayCriteria: q.essayCriteria.map((c) => ({
           criteria: c.criteria,
           maxScore: c.maxScore,
-          rubrics: c.rubrics,
+          rubrics: c.rubrics.map((r) => ({
+            score: r.score,
+            description: r.description,
+          })),
         })),
       })),
     };
@@ -274,9 +269,7 @@ const EditEssayAssessment = () => {
         throw new Error("Failed to update assessment");
       }
 
-      // const responseData = await response.json();
-      // Redirect to the updated assessment page or dashboard
-      // router.push(`/assessments/${assessmentId}/essay`);
+      window.location.reload();
     } catch (error) {
       console.error("Failed to update essay assessment:", error);
     } finally {
@@ -440,10 +433,11 @@ const EditEssayAssessment = () => {
           <button
             onClick={handleNavigation}
             disabled={isLoading}
-            className={`flex-1 py-2 px-4 rounded-md transition-all ${isLoading
-              ? "bg-gray-300 cursor-not-allowed"
-              : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-              }`}
+            className={`flex-1 py-2 px-4 rounded-md transition-all ${
+              isLoading
+                ? "bg-gray-300 cursor-not-allowed"
+                : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+            }`}
           >
             Results
           </button>

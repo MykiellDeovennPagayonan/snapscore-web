@@ -128,7 +128,7 @@ const CreateIdentificationAssessment = () => {
             }
             className="w-32 p-2 border rounded-md appearance-none pl-4 focus:outline-none focus:ring-2 focus:ring-gray-200"
           >
-            {[10, 20, 30, 40, 50].map((num) => (
+            {[5, 10, 15, 20].map((num) => (
               <option key={num} value={num}>
                 {num}
               </option>

@@ -92,7 +92,7 @@ export default function StudentList({ assessmentId, type }: StudentListProps) {
             {assessment ? assessment.name : "Untitled Assessment"}
           </h1>
         )}
-        <ImageUploader type={type} assessmentId={assessmentId} onSuccess={fetchResults} />
+        <ImageUploader type={type} assessmentId={assessmentId} onSuccess={() => window.location.reload()} />
       </div>
 
       <div className="p-4">

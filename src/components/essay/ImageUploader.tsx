@@ -51,6 +51,7 @@ export default function ImageUploader({ type, assessmentId, onSuccess }: ImageUp
         console.log("Identification result:", identificationResult)
       }
 
+
       onSuccess()
       setFile(null)
     } catch (error) {
