@@ -27,7 +27,7 @@ interface EssayQuestion {
 
 const CreateEssayAssessment = () => {
   const [essayName, setEssayName] = useState<string>('Sample Essay');
-  const [questionCount, setQuestionCount] = useState<number>(1);
+  // const [questionCount, setQuestionCount] = useState<number>(1);
   const [user] = useAuthState(auth);
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false)
@@ -179,31 +179,31 @@ const CreateEssayAssessment = () => {
     );
   };
 
-  const handleQuestionCountChange = (value: number) => {
-    setQuestionCount(value);
-    setQuestions(prev => {
-      if (value > prev.length) {
-        return [
-          ...prev,
-          ...Array.from({ length: value - prev.length }, (_, i) => ({
-            id: prev.length + i + 1,
-            question: '',
-            essayCriteria: [{
-              id: 1,
-              criteria: 'Content and Organization',
-              maxScore: 20,
-              rubrics: [
-                { score: '20', description: 'Excellent performance' },
-                { score: '10', description: 'Fair performance' }
-              ]
-            }]
-          }))
-        ];
-      } else {
-        return prev.slice(0, value);
-      }
-    });
-  };
+  // const handleQuestionCountChange = (value: number) => {
+  //   setQuestionCount(value);
+  //   setQuestions(prev => {
+  //     if (value > prev.length) {
+  //       return [
+  //         ...prev,
+  //         ...Array.from({ length: value - prev.length }, (_, i) => ({
+  //           id: prev.length + i + 1,
+  //           question: '',
+  //           essayCriteria: [{
+  //             id: 1,
+  //             criteria: 'Content and Organization',
+  //             maxScore: 20,
+  //             rubrics: [
+  //               { score: '20', description: 'Excellent performance' },
+  //               { score: '10', description: 'Fair performance' }
+  //             ]
+  //           }]
+  //         }))
+  //       ];
+  //     } else {
+  //       return prev.slice(0, value);
+  //     }
+  //   });
+  // };
 
   const calculateTotalScore = (questionId: number): number => {
     const question = questions.find(q => q.id === questionId);
@@ -274,7 +274,7 @@ const CreateEssayAssessment = () => {
           />
         </div>
 
-        <div>
+        {/* <div>
           <label className="text-gray-600">Number of Questions:</label>
           <select
             value={questionCount}
@@ -285,18 +285,18 @@ const CreateEssayAssessment = () => {
             <option value={2}>2</option>
             <option value={3}>3</option>
           </select>
-        </div>
+        </div> */}
 
         {questions.map((question) => (
           <div key={question.id} className="space-y-4 border-b pb-4">
             <div>
-              <label className="text-gray-600">Question {question.id}:</label>
+              <label className="text-gray-600">Question:</label>
               <input
                 type="text"
                 value={question.question}
                 onChange={(e) => handleQuestionChange(question.id, e.target.value)}
                 className="w-full p-2 border rounded-md pl-4"
-                placeholder={`Question ${question.id}`}
+                placeholder={`Question`}
               />
             </div>
 

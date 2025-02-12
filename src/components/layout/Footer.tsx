@@ -1,6 +1,6 @@
 // components/Footer.tsx
 import Link from 'next/link'
-import Image from 'next/image'
+// import Image from 'next/image'
 import { FC } from 'react'
 
 const Footer: FC = () => {
@@ -10,8 +10,8 @@ const Footer: FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Install Section */}
           <div className="col-span-1">
-            <h2 className="text-xl mb-4">INSTALL SnapScore FREE</h2>
-            <Link href="https://play.google.com/store" className="inline-block">
+            {/* <h2 className="text-xl mb-4">INSTALL SnapScore FREE</h2> */}
+            {/* <Link href="https://play.google.com/store" className="inline-block">
               <div className='p-2 bg-black items-center justify-center rounded-lg'>
                 <Image
                   src="/google-play-badge.jpg"
@@ -21,7 +21,7 @@ const Footer: FC = () => {
                   className="hover:opacity-90 rounded-lg"
                 />
               </div>
-            </Link>
+            </Link> */}
           </div>
 
           {/* Product Section */}
