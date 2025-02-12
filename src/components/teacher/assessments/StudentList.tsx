@@ -33,7 +33,7 @@ export default function StudentList({ assessmentId, type }: StudentListProps) {
   const pathname = usePathname();
 
   const handleNavigation = () => {
-    const newPath = `${pathname}/result`;
+    const newPath = `${pathname}/results`;
     router.push(newPath);
   };
 
