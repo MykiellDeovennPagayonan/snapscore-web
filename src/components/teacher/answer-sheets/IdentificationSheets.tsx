@@ -1,5 +1,6 @@
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function IdentificationSheets() {
   const downloadPDF = (numQuestions : number) => {
@@ -21,17 +22,22 @@ export default function IdentificationSheets() {
           </Link>
           <h1 className="text-3xl font-bold">Identification</h1>
         </div>
-        <p className="text-sm">
-          Print your answer sheets based on your number of questions.
-        </p>
+        <p className="text-sm"> Print your answer sheets based on your number of questions. </p>
       </div>
       <div className="p-4 flex w-full gap-4 flex-wrap justify-center">
-        {[10, 20, 30, 40, 50].map((num) => (
+        {[5, 10, 15, 20].map((num) => (
           <div
             key={num}
-            className="w-52 flex p-4 aspect-[8.5/11] bg-white border items-center border-black rounded-lg cursor-pointer"
+            className="w-52 flex flex-col p-4 aspect-[8.5/11] bg-white border items-center border-black rounded-lg cursor-pointer"
             onClick={() => downloadPDF(num)}
           >
+            <Image 
+              src={`/images/Identification_${num}_Questions.png`} 
+              alt={`${num} Questions`} 
+              width={208} 
+              height={272} 
+              className="rounded-md mb-2"
+            />
             <p className="mt-auto text-center w-full">{num} Questions</p>
           </div>
         ))}
