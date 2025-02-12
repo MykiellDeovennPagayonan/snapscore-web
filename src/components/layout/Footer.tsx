@@ -10,7 +10,7 @@ const Footer: FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Install Section */}
           <div className="col-span-1">
-            <h2 className="text-xl mb-4">INSTALL DeGrader FREE</h2>
+            <h2 className="text-xl mb-4">INSTALL SnapScore FREE</h2>
             <Link href="https://play.google.com/store" className="inline-block">
               <div className='p-2 bg-black items-center justify-center rounded-lg'>
                 <Image
@@ -41,6 +41,10 @@ const Footer: FC = () => {
             </ul>
           </div> */}
 
+          <div className='col-span-1'>
+
+          </div>
+
           {/* Company Info Section */}
           <div className="col-span-1">
             <h2 className="text-xl mb-4">COMPANY INFO:</h2>
@@ -66,8 +70,8 @@ const Footer: FC = () => {
           {/* Contact Info Section */}
           <div className="col-span-1">
             <div className="text-gray-400">
-              <p>Email: info@essai.com</p>
-              <p>ESSAI LLC</p>
+              <p>Email: snapscore@gmail.com</p>
+              <p>SnapScore LLC</p>
               <p>PO Box 123</p>
               <p>Bacolod City, Neg. Occ., Philippines</p>
             </div>
@@ -76,7 +80,7 @@ const Footer: FC = () => {
 
         {/* Copyright Notice */}
         <div className="mt-8 pt-8 border-t border-gray-700 text-sm text-gray-400">
-          <p>2025 © DeGrader LLC. All Rights Reserved.</p>
+          <p>2025 © SnapScore LLC. All Rights Reserved.</p>
         </div>
       </div>
     </footer>

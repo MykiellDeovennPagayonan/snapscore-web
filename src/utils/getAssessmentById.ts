@@ -37,7 +37,6 @@ export async function getIdentificationAssessmentById(
   assessmentId: string,
   type: "identification"
 ): Promise<IdentificationAssessment> {
-  console.log("waaaa")
   const endpoint = `${baseUrl}/identification-assessment/${assessmentId}`;
   const response = await fetch(endpoint);
   if (!response.ok) {
