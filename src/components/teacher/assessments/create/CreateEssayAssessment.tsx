@@ -38,16 +38,53 @@ const CreateEssayAssessment = () => {
       essayCriteria: [
         {
           id: 1,
-          criteria: 'Content and Organization',
-          maxScore: 20,
+          criteria: 'Content',
+          maxScore: 5,
           rubrics: [
-            { score: '20', description: 'Excellent content and organization' },
-            { score: '15', description: 'Good content and organization' },
-            { score: '10', description: 'Fair content and organization' },
-            { score: '5', description: 'Poor content and organization' }
+            { score: '5', description: 'Insightful, well-developed ideas with strong, compelling support.' },
+            { score: '4', description: 'Well-developed ideas with solid support.' },
+            { score: '3', description: 'Some ideas developed; moderate supporting details.' },
+            { score: '2', description: 'Ideas are weak or unclear; minimal support.' },
+            { score: '1', description: 'Lacks clear ideas; little to no development.' }
+          ]
+        },
+        {
+          id: 2,
+          criteria: 'Organization',
+          maxScore: 5,
+          rubrics: [
+            { score: '5', description: 'Excellent structure; ideas flow logically and effectively.' },
+            { score: '4', description: 'Well-organized with smooth transitions.' },
+            { score: '3', description: 'Some logical flow but inconsistent.' },
+            { score: '2', description: 'Weak organization; difficult to follow.' },
+            { score: '1', description: 'No clear structure; ideas are scattered.' }
+          ]
+        },
+        {
+          id: 3,
+          criteria: 'Style',
+          maxScore: 5,
+          rubrics: [
+            { score: '5', description: 'Polished, sophisticated, and engaging style.' },
+            { score: '4', description: 'Clear and engaging writing with good variety.' },
+            { score: '3', description: 'Mostly clear, with occasional awkwardness.' },
+            { score: '2', description: 'Weak or inconsistent style; some awkward phrasing.' },
+            { score: '1', description: 'Poor sentence structure; unclear or awkward phrasing.' }
+          ]
+        },
+        {
+          id: 4,
+          criteria: 'Mechanics',
+          maxScore: 5,
+          rubrics: [
+            { score: '5', description: 'Virtually error-free and highly polished.' },
+            { score: '4', description: 'Few minor errors.' },
+            { score: '3', description: 'Some errors, but they don’t significantly impact understanding.' },
+            { score: '2', description: 'Many errors that disrupt readability.' },
+            { score: '1', description: 'Frequent grammar, spelling, or punctuation errors.' }
           ]
         }
-      ]
+      ]   
     }
   ]);
 
