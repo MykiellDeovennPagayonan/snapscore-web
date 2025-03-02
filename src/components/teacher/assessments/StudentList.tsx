@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { ArrowLeft, Search } from "lucide-react";
 import StudentPreview from "./StudentPreview";
 import Link from "next/link";
-import ImageUploader from "@/components/essay/ImageUploader";
+// import ImageUploader from "@/components/essay/ImageUploader";
 import { fetchEssayResults, fetchIdentificationResults } from "../../../utils/getResults";
 import { getEssayAssessmentById, getIdentificationAssessmentById } from "@/utils/getAssessmentById";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -92,7 +92,7 @@ export default function StudentList({ assessmentId, type }: StudentListProps) {
             {assessment ? assessment.name : "Untitled Assessment"}
           </h1>
         )}
-        <ImageUploader type={type} assessmentId={assessmentId} onSuccess={() => window.location.reload()} />
+        {/* <ImageUploader type={type} assessmentId={assessmentId} onSuccess={() => window.location.reload()} /> */}
       </div>
 
       <div className="p-4">

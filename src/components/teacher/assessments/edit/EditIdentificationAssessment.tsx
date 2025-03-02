@@ -19,7 +19,7 @@ const EditIdentificationAssessment = () => {
   const router = useRouter();
   const { id: assessmentId } = useParams();
   const [assessmentName, setAssessmentName] = useState<string>("");
-  const [numberOfAnswers, setNumberOfAnswers] = useState<number>(10);
+  const [numberOfAnswers, setNumberOfAnswers] = useState<number>(5);
   const [answers, setAnswers] = useState<Answer[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [toast, setToast] = useState<Toast | null>(null);
@@ -187,7 +187,7 @@ const EditIdentificationAssessment = () => {
             }
             className="w-32 p-2 border rounded-md appearance-none pl-4 focus:outline-none focus:ring-2 focus:ring-gray-200"
           >
-            {[10, 20, 30, 40, 50].map((num) => (
+            {[5, 10, 15, 20].map((num) => (
               <option key={num} value={num}>
                 {num}
               </option>
