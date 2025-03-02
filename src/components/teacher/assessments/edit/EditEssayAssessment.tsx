@@ -446,7 +446,7 @@ const EditEssayAssessment = () => {
             className="flex-1 bg-gray-200 text-gray-700 py-2 px-4 rounded-md hover:bg-gray-300"
             disabled={isLoading}
           >
-            {isLoading ? "Saving..." : "Save Changes"}
+            {isLoading ? "Saving..." : "Save"}
           </button>
         </div>
       </div>

@@ -195,7 +195,7 @@ export default function Register() {
 
   return (
     <div className="mx-auto p-6 w-full max-w-lg my-12">
-      <h1 className="text-3xl font-bold mb-4 text-center">Create New Teacher Account</h1>
+      <h1 className="text-3xl font-bold mb-4 text-center">Create New User Account</h1>
       {(error || googleError) && (
         <div className="mb-4 text-red-600 text-sm text-center">
           {error || googleError?.message}

@@ -120,7 +120,7 @@ export default function TeacherLogin() {
 
   return (
     <div className="mx-auto p-6 w-full max-w-lg my-12">
-      <h1 className="text-3xl font-bold text-center mb-6">Teacher Login</h1>
+      <h1 className="text-3xl font-bold text-center mb-6">User Login</h1>
       {(error || googleError) && (
         <div className="mb-4 p-3 bg-red-50 border border-red-200 text-red-600 rounded-md text-center text-sm">
           {error || googleError?.message}

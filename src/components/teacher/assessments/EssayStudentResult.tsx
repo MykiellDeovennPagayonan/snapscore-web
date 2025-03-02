@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client"
 import { useState, useEffect } from 'react';
-import { Check, ArrowLeft, Loader2 } from "lucide-react";
+import { ArrowLeft, Loader2 } from "lucide-react";
 import { useRouter } from 'next/navigation';
 import { getEssayResultById } from '@/utils/getResults';
 import {
@@ -144,7 +144,7 @@ const EssayStudentResult = ({ resultId }: { resultId: string }) => {
             {saving ? (
               <Loader2 className="w-5 h-5 animate-spin" />
             ) : (
-              <Check />
+              "Save"
             )}
           </button>
         </div>

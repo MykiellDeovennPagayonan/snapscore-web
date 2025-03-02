@@ -21,7 +21,7 @@ export default function PersonalInformation() {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
-  const [formData, setFormData] = useState({ fullName: '', school: '' });
+  const [formData, setFormData] = useState({ fullName: '' });
 
   useEffect(() => {
     if (firebaseUser) {
@@ -39,7 +39,7 @@ export default function PersonalInformation() {
       }
       const data = await response.json();
       setUser(data);
-      setFormData({ fullName: data.fullName, school: data.school || '' });
+      setFormData({ fullName: data.fullName });
     } catch (error) {
       console.error(error);
     } finally {
@@ -119,7 +119,7 @@ export default function PersonalInformation() {
             />
           </div>
         </div>
-        <div>
+        {/* <div>
           <label className="block text-sm font-semibold text-gray-700">
             School/University
           </label>
@@ -132,7 +132,7 @@ export default function PersonalInformation() {
               className="pl-8"
             />
           </div>
-        </div>
+        </div> */}
       </div>
       <button onClick={handleSave} className={`w-full mt-6 flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white ${loading ? 'bg-gray-400' : 'bg-gray-600 hover:bg-gray-700'
         } focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500`} disabled={saving}>
