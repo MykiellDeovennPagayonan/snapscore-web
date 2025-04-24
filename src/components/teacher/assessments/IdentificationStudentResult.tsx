@@ -1,15 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from "react";
 import { ArrowLeft, Loader2, MoreVertical } from "lucide-react";
-import { getIdentificationResultById } from '@/utils/getResults';
+import { getIdentificationResultById } from "@/utils/getResults";
 import {
   updateIdentificationResult,
   updateIdentificationQuestionResult,
-} from '@/utils/updateIdentificationResults';
+} from "@/utils/updateIdentificationResults";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useToast } from '@/hooks/use-toast';
-import { useRouter } from 'next/navigation';
+import { useToast } from "@/hooks/use-toast";
+import { useRouter } from "next/navigation";
 
 const IdentificationStudentResult = ({ resultId }: { resultId: string }) => {
   const [result, setResult] = useState<IdentificationResult | null>(null);
@@ -30,7 +30,7 @@ const IdentificationStudentResult = ({ resultId }: { resultId: string }) => {
         setBackLink(`/assessments/${data.assessment.id}/identification`);
         setResult(data);
       } catch (err) {
-        console.error('Error fetching identification result:', err);
+        console.error("Error fetching identification result:", err);
         toast({
           title: "Error",
           description: "Failed to load identification result",
@@ -55,10 +55,10 @@ const IdentificationStudentResult = ({ resultId }: { resultId: string }) => {
       }
     }
     if (activePopup) {
-      document.addEventListener('mousedown', handleClickOutside);
+      document.addEventListener("mousedown", handleClickOutside);
     }
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [activePopup]);
 
@@ -69,7 +69,10 @@ const IdentificationStudentResult = ({ resultId }: { resultId: string }) => {
   };
 
   // Update the correctness flag of a given question result.
-  const handleSetCorrectness = (questionResultId: string, isCorrect: boolean) => {
+  const handleSetCorrectness = (
+    questionResultId: string,
+    isCorrect: boolean
+  ) => {
     setResult((prev) => {
       if (!prev) return prev;
       return {
@@ -87,18 +90,20 @@ const IdentificationStudentResult = ({ resultId }: { resultId: string }) => {
     if (!result) return;
     setSaving(true);
     try {
-      await updateIdentificationResult(result.id, { studentName: result.studentName });
+      await updateIdentificationResult(result.id, {
+        studentName: result.studentName,
+      });
       const updatePromises = result.questionResults.map((qr) =>
         updateIdentificationQuestionResult(qr.id, { isCorrect: qr.isCorrect })
       );
       await Promise.all(updatePromises);
-      toast({ title: 'Saved changes successfully!' });
+      toast({ title: "Saved changes successfully!" });
     } catch (error: any) {
       console.error("Error saving changes:", error);
       toast({
-        title: 'Error saving changes',
+        title: "Error saving changes",
         description: error.message,
-        variant: 'destructive',
+        variant: "destructive",
       });
     } finally {
       setSaving(false);
@@ -130,11 +135,7 @@ const IdentificationStudentResult = ({ resultId }: { resultId: string }) => {
         </div>
         <div className="flex items-center space-x-4">
           <button className="p-2" onClick={handleSaveChanges} disabled={saving}>
-            {saving ? (
-              <Loader2 className="w-5 h-5 animate-spin" />
-            ) : (
-              "Save"
-            )}
+            {saving ? <Loader2 className="w-5 h-5 animate-spin" /> : "Save"}
           </button>
         </div>
       </div>
@@ -171,7 +172,9 @@ const IdentificationStudentResult = ({ resultId }: { resultId: string }) => {
           >
             <div className="flex items-center flex-1">
               <span className="mr-2">{index + 1}.</span>
-              <span className={qr.isCorrect ? 'text-green-600' : 'text-red-600'}>
+              <span
+                className={qr.isCorrect ? "text-green-600" : "text-red-600"}
+              >
                 {qr.answer}
               </span>
             </div>

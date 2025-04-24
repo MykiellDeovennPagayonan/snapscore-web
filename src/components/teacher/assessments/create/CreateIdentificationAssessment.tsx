@@ -1,34 +1,39 @@
 "use client";
-import { useState } from 'react';
+import { useState } from "react";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useRouter } from "next/navigation";
 import { auth } from "../../../../lib/firebase/init";
-import { createIdentificationAssessment } from '@/utils/createIdentificationAssessment';
+import { createIdentificationAssessment } from "@/utils/createIdentificationAssessment";
 
 interface Answer {
   id: number;
+  number: number;
   value: string;
 }
 
 interface Toast {
   message: string;
-  type: 'success' | 'error';
+  type: "success" | "error";
 }
 
 const CreateIdentificationAssessment = () => {
   const router = useRouter();
-  const [assessmentName, setAssessmentName] = useState<string>('');
+  const [assessmentName, setAssessmentName] = useState<string>("");
   const [numberOfAnswers, setNumberOfAnswers] = useState<number>(10);
   const [answers, setAnswers] = useState<Answer[]>(
-    Array.from({ length: numberOfAnswers }, (_, i) => ({ id: i + 1, value: '' }))
+    Array.from({ length: numberOfAnswers }, (_, i) => ({
+      id: i + 1,
+      number: i + 1,
+      value: "",
+    }))
   );
   const [user] = useAuthState(auth);
   const [isLoading, setIsLoading] = useState(false);
   const [toast, setToast] = useState<Toast | null>(null);
 
-  const showToast = (message: string, type: 'success' | 'error') => {
+  const showToast = (message: string, type: "success" | "error") => {
     setToast({ message, type });
     setTimeout(() => setToast(null), 3000);
   };
@@ -39,7 +44,7 @@ const CreateIdentificationAssessment = () => {
       return;
     }
 
-    if (answers.some(answer => !answer.value.trim())) {
+    if (answers.some((answer) => !answer.value.trim())) {
       showToast("Please fill in all answers", "error");
       return;
     }
@@ -54,10 +59,13 @@ const CreateIdentificationAssessment = () => {
       await createIdentificationAssessment({
         name: assessmentName,
         firebaseId: user.uid,
-        answers: answers.map(a => a.value.trim()),
+        answers: answers.map((answer) => ({
+          number: answer.number,
+          correctAnswer: answer.value,
+        })),
       });
       showToast("Answer sheet created successfully!", "success");
-      setTimeout(() => router.push('/assessments'), 1500);
+      setTimeout(() => router.push("/assessments"), 1500);
     } catch (error) {
       console.error("Error creating answer sheet:", error);
       showToast("Failed to create answer sheet", "error");
@@ -66,9 +74,9 @@ const CreateIdentificationAssessment = () => {
     }
   };
 
-  const handleAnswerChange = (id: number, value: string) => {
-    setAnswers(prev =>
-      prev.map(answer => (answer.id === id ? { ...answer, value } : answer))
+  const handleAnswerChange = (id: number, number: number, value: string) => {
+    setAnswers((prev) =>
+      prev.map((answer) => (answer.id === id ? { ...answer, value } : answer))
     );
   };
 
@@ -77,7 +85,8 @@ const CreateIdentificationAssessment = () => {
     setAnswers(
       Array.from({ length: value }, (_, i) => ({
         id: i + 1,
-        value: i < answers.length ? answers[i].value : '',
+        number: i + 1,
+        value: i < answers.length ? answers[i].value : "",
       }))
     );
   };
@@ -87,7 +96,7 @@ const CreateIdentificationAssessment = () => {
       {toast && (
         <div
           className={`fixed top-4 right-4 p-4 rounded-md shadow-lg transition-all ${
-            toast.type === 'success' ? 'bg-green-500' : 'bg-red-500'
+            toast.type === "success" ? "bg-green-500" : "bg-red-500"
           } text-white`}
         >
           {toast.message}
@@ -95,7 +104,10 @@ const CreateIdentificationAssessment = () => {
       )}
 
       <div className="flex items-center mb-6">
-        <Link href="/assessments" className="hover:opacity-80 transition-opacity">
+        <Link
+          href="/assessments"
+          className="hover:opacity-80 transition-opacity"
+        >
           <ArrowLeft className="w-5 h-5" />
         </Link>
         <h1 className="text-2xl font-bold ml-2">
@@ -105,9 +117,7 @@ const CreateIdentificationAssessment = () => {
 
       <div className="space-y-4">
         <div>
-          <label className="text-gray-600 block mb-1">
-            Assessment Name:
-          </label>
+          <label className="text-gray-600 block mb-1">Assessment Name:</label>
           <input
             type="text"
             value={assessmentName}
@@ -118,9 +128,7 @@ const CreateIdentificationAssessment = () => {
         </div>
 
         <div>
-          <label className="text-gray-600 block mb-1">
-            Number of Answers:
-          </label>
+          <label className="text-gray-600 block mb-1">Number of Answers:</label>
           <select
             value={numberOfAnswers}
             onChange={(e) =>
@@ -139,13 +147,13 @@ const CreateIdentificationAssessment = () => {
         <div>
           <label className="text-gray-600 block mb-1">Answers:</label>
           <div className="space-y-2">
-            {answers.map((answer) => (
+            {answers.map((answer, index) => (
               <div key={answer.id} className="relative">
                 <input
                   type="text"
                   value={answer.value}
                   onChange={(e) =>
-                    handleAnswerChange(answer.id, e.target.value)
+                    handleAnswerChange(answer.id, index + 1, e.target.value)
                   }
                   className="w-full p-2 border rounded-md pl-4 focus:outline-none focus:ring-2 focus:ring-gray-200"
                   placeholder={`Answer ${answer.id}`}
@@ -161,11 +169,11 @@ const CreateIdentificationAssessment = () => {
             disabled={isLoading}
             className={`flex-1 py-2 px-4 rounded-md transition-all ${
               isLoading
-                ? 'bg-gray-300 cursor-not-allowed'
-                : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                ? "bg-gray-300 cursor-not-allowed"
+                : "bg-gray-200 text-gray-700 hover:bg-gray-300"
             }`}
           >
-            {isLoading ? 'Saving...' : 'Save Answer Sheet'}
+            {isLoading ? "Saving..." : "Save Answer Sheet"}
           </button>
         </div>
       </div>

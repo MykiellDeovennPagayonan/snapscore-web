@@ -7,6 +7,7 @@ import { useRouter, useParams, usePathname } from "next/navigation";
 
 interface Answer {
   id: number;
+  number: number;
   value: string;
 }
 
@@ -53,6 +54,7 @@ const EditIdentificationAssessment = () => {
         const fetchedAnswers: Answer[] = data.identificationQuestions.map(
           (q: any, index: number) => ({
             id: index + 1,
+            number: q.number,
             value: q.correctAnswer,
           })
         );
@@ -67,9 +69,11 @@ const EditIdentificationAssessment = () => {
     fetchAssessment();
   }, [assessmentId]);
 
-  const handleAnswerChange = (id: number, value: string) => {
+  const handleAnswerChange = (id: number, number: number, value: string) => {
     setAnswers((prev) =>
-      prev.map((answer) => (answer.id === id ? { ...answer, value } : answer))
+      prev.map((answer) =>
+        answer.id === id ? { ...answer, value: value, number: number } : answer
+      )
     );
   };
 
@@ -82,6 +86,7 @@ const EditIdentificationAssessment = () => {
           ...prev,
           ...Array.from({ length: value - currentLength }, (_, i) => ({
             id: currentLength + i + 1,
+            number: currentLength + i + 1,
             value: "",
           })),
         ];
@@ -114,6 +119,7 @@ const EditIdentificationAssessment = () => {
         name: assessmentName,
         questions: answers.map((answer) => ({
           correctAnswer: answer.value.trim(),
+          number: answer.number,
         })),
       };
 
@@ -132,7 +138,7 @@ const EditIdentificationAssessment = () => {
         throw new Error("Failed to update identification assessment");
       }
       showToast("Answer sheet updated successfully!", "success");
-      window.location.reload()
+      window.location.reload();
     } catch (error) {
       console.error("Error updating answer sheet:", error);
       showToast("Failed to update answer sheet", "error");
@@ -154,7 +160,10 @@ const EditIdentificationAssessment = () => {
       )}
 
       <div className="flex items-center mb-6">
-        <Link href="/assessments" className="hover:opacity-80 transition-opacity">
+        <Link
+          href="/assessments"
+          className="hover:opacity-80 transition-opacity"
+        >
           <ArrowLeft className="w-5 h-5" />
         </Link>
         <h1 className="text-2xl font-bold ml-2">
@@ -164,9 +173,7 @@ const EditIdentificationAssessment = () => {
 
       <div className="space-y-4">
         <div>
-          <label className="text-gray-600 block mb-1">
-            Assessment Name:
-          </label>
+          <label className="text-gray-600 block mb-1">Assessment Name:</label>
           <input
             type="text"
             value={assessmentName}
@@ -177,9 +184,7 @@ const EditIdentificationAssessment = () => {
         </div>
 
         <div>
-          <label className="text-gray-600 block mb-1">
-            Number of Answers:
-          </label>
+          <label className="text-gray-600 block mb-1">Number of Answers:</label>
           <select
             value={numberOfAnswers}
             onChange={(e) =>
@@ -198,13 +203,13 @@ const EditIdentificationAssessment = () => {
         <div>
           <label className="text-gray-600 block mb-1">Answers:</label>
           <div className="space-y-2">
-            {answers.map((answer) => (
+            {answers.map((answer, index) => (
               <div key={answer.id} className="relative">
                 <input
                   type="text"
                   value={answer.value}
                   onChange={(e) =>
-                    handleAnswerChange(answer.id, e.target.value)
+                    handleAnswerChange(answer.id, index + 1, e.target.value)
                   }
                   className="w-full p-2 border rounded-md pl-4 focus:outline-none focus:ring-2 focus:ring-gray-200"
                   placeholder={`Answer ${answer.id}`}
