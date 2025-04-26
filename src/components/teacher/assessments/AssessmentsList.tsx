@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../../lib/firebase/init";
 import AssessmentPreview from "./AssessmentPreview";
-import NewAssessment from "./NewAssessment";
+// import NewAssessment from "./NewAssessment";
 import { getAllAssessmentsByUser, Assessment } from "@/utils/getAllAssessmentsByUser";
 import { Skeleton } from "@/components/ui/skeleton";
 
@@ -76,7 +76,7 @@ export default function AssessmentsList() {
             <p>No assessments found.</p>
           )
         }
-        <NewAssessment />
+        {/* <NewAssessment /> */}
       </div>
     </div>
   );
